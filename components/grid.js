@@ -35,6 +35,26 @@ class Grid {
     end.state.endCell = true;
   }
 
+  resetGrid() {
+    for (let x = 0; x < this.cells.length; x++) {
+      for (let y = 0; y < this.cells[0].length; y++) {
+        let cell = this.cells[x][y];
+        cell.clear();
+        cell.distance = null;
+        cell.draw(this.ctx);
+      }
+    }
+  }
+
+  resetCells() {
+    this.cells.forEach ( (row) => {
+      row.forEach( (cell) => {
+        cell.childNodes = [];
+        cell.parentNode = [];
+      });
+    });
+  }
+
   draw(ctx) {
     ctx.lineWidth = 10;
     this.cells.forEach ( (row) => {

@@ -40,9 +40,9 @@ class Cell {
     }
   }
 
-  makeChild(cell) {
-    cell.parentNode = this;
-    this.childNodes.push(cell);
+  makeChild(childCell) {
+    childCell.parentNode = this;
+    this.childNodes.push(childCell);
   }
 
   isChild(cell) {
@@ -58,6 +58,17 @@ class Cell {
     return false;
   }
 
+  getParentNode() {
+    if (this.state.startCell) {
+      return this;
+    }
+
+    if (this.parent) {
+      return this.parent;
+    }
+
+    return;
+  }
 
 
   draw(ctx) {
