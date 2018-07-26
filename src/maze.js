@@ -5,10 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   canvasEl.width = 630;
   canvasEl.height = 430;
   const ctx = canvasEl.getContext("2d");
-  ctx.lineWidth = 20;
-  ctx.strokeRect(0, 0, 610, 410);
+  ctx.lineWidth = 10;
+  ctx.strokeRect(5, 5, 610, 410);
 
   const grid = new Grid(ctx);
   grid.fillGrid();
+  grid.makeCellStart();
+  grid.makeCellEnd();
   grid.draw(ctx);
 });
