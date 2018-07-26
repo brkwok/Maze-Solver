@@ -26,13 +26,13 @@ class Grid {
   }
 
   makeCellStart() {
-    const startCell = this.getCell(this.startPos[0], this.startPos[1]);
-    startCell.state.start = true;
+    const start = this.getCell(this.startPos[0], this.startPos[1]);
+    start.state.startCell = true;
   }
 
   makeCellEnd() {
-    const endCell = this.getCell(this.endPos[0], this.endPos[1]);
-    endCell.state.end = true;
+    const end = this.getCell(this.endPos[0], this.endPos[1]);
+    end.state.endCell = true;
   }
 
   draw(ctx) {

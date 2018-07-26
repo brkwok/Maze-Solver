@@ -6,25 +6,67 @@ class Cell {
     this.y = y;
     this.grid = grid;
     this.width = 10;
-    this.distance = 0;
-    this.childNode = [];
+    this.childNodes = [];
     this.parentNode = null;
+    this.distance = null;
+
+    // this.neighborCoords = {
+    //   up: [1, 0],
+    //   down: [-1, 0],
+    //   left: [0, -1],
+    //   right: [0, 1],
+    //   leftUp: [-1, -1],
+    //   rightUp: [1, 1],
+    //   rightDown: [1, -1],
+    //   leftDown: [-1, -1],
+    // };
     this.state = {
-      type: 'wall',
-      start: false,
-      end: false,
+      type: 'w',
+      startCell: false,
+      endCell: false,
       checked: false,
-      solution: false,
     };
   }
 
+  wallToPath() {
+    this.state.type = "p";
+  }
+
+  isCell(cell) {
+    if (cell.x === this.x && cell.y === this.y) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  makeChild(cell) {
+    cell.parentNode = this;
+    this.childNodes.push(cell);
+  }
+
+  isChild(cell) {
+    let children = this.childNodes;
+
+    for (let i = 0; i < children.length; i++) {
+      let child = children[i];
+      if (child.isCell(cell)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+
+
   draw(ctx) {
-    if (this.state.start) {
-      ctx.fillStyle = "#00e229";
-    } else if (this.state.end) {
+    if (this.state.startCell) {
+      ctx.fillStyle = "#00ff00";
+    } else if (this.state.endCell) {
       ctx.fillStyle = "#ff0000";
     } else {
-      ctx.fillStyle = "#4db5f2";
+      ctx.fillStyle = "#0000ff";
     }
     ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
   }
