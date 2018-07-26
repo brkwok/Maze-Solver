@@ -6,6 +6,8 @@ class Grid {
     this.cells = [];
     this.startPos = [0, 0];
     this.endPos = [59, 39];
+    this.startCell = null;
+    this.endCell = null;
   }
 
   fillGrid() {
@@ -27,30 +29,31 @@ class Grid {
 
   makeCellStart() {
     const start = this.getCell(this.startPos[0], this.startPos[1]);
-    start.state.startCell = true;
+    start.state.startingCell = true;
+    this.startCell = start;
   }
 
   makeCellEnd() {
     const end = this.getCell(this.endPos[0], this.endPos[1]);
-    end.state.endCell = true;
+    end.state.endingCell = true;
+    this.endCell = end;
   }
 
   resetGrid() {
-    for (let x = 0; x < this.cells.length; x++) {
-      for (let y = 0; y < this.cells[0].length; y++) {
-        let cell = this.cells[x][y];
+    this.cells.forEach( (row) => {
+      row.forEach( (cell) => {
         cell.clear();
         cell.distance = null;
         cell.draw(this.ctx);
-      }
-    }
+      });
+    });
   }
 
   resetCells() {
     this.cells.forEach ( (row) => {
       row.forEach( (cell) => {
         cell.childNodes = [];
-        cell.parentNode = [];
+        cell.parentNode = null;
       });
     });
   }

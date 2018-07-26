@@ -22,10 +22,16 @@ class Cell {
     // };
     this.state = {
       type: 'w',
-      startCell: false,
-      endCell: false,
+      startingCell: false,
+      endingCell: false,
+      genStart: false,
+      genEnd: false,
       checked: false,
     };
+  }
+
+  clear() {
+    this.state.checked =  false;
   }
 
   wallToPath() {
@@ -72,9 +78,9 @@ class Cell {
 
 
   draw(ctx) {
-    if (this.state.startCell) {
+    if (this.state.startingCell) {
       ctx.fillStyle = "#00ff00";
-    } else if (this.state.endCell) {
+    } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
     } else {
       ctx.fillStyle = "#0000ff";
