@@ -28,6 +28,7 @@ class Grid {
   }
 
   makeCellStart() {
+    //sets maze starting point always to the first cell
     const start = this.getCell(this.startPos[0], this.startPos[1]);
     start.state.startingCell = true;
     this.startCell = start;
@@ -49,6 +50,20 @@ class Grid {
     });
   }
 
+  validPath(cell) {
+    let validNeighbors = cell.neighborsValidCell;
+    let parent = cell.getParentNode();
+    let grandParent = parent.getParentNode();
+
+    validNeighbors.forEach( (cell) => {
+      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || this.isChild(cell)) && cell.state.type === "p") {
+        return false;
+      }
+    });
+
+    return true;
+  }
+
   resetCells() {
     this.cells.forEach ( (row) => {
       row.forEach( (cell) => {
@@ -67,7 +82,6 @@ class Grid {
   }
 
   draw(ctx) {
-    ctx.lineWidth = 10;
     this.cells.forEach ( (row) => {
       row.forEach( (cell) => {
         cell.draw(ctx);

@@ -6,5 +6,13 @@ class DFSGenerator {
     this.stack = [];
   }
 
+  startGeneration() {
+    this.grid.makeCellStart();
+    this.grid.makeCellEnd();
+    let startCell = this.grid.startCell;
+    startCell.makeToPath();
+    startCell.draw(startCell.grid.ctx);
+  }
+
   
 }

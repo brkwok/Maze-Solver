@@ -26,7 +26,7 @@ class Cell {
       genStart: false,
       genEnd: false,
       checked: false,
-      frontier: false
+      stack: false
     };
   }
 
@@ -34,7 +34,7 @@ class Cell {
     this.state.checked =  false;
   }
 
-  wallToPath() {
+  makeToPath() {
     this.state.type = "p";
   }
 
@@ -116,7 +116,7 @@ class Cell {
 
     //check if the neighboring cells are path or parent or child
     validNeighbors.forEach( (cell) => {
-      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || this.isChild(cell)) || cell.state.type === "p") {
+      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || this.isChild(cell)) && cell.state.type === "p") {
         return false;
       }
     });
