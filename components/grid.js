@@ -58,6 +58,14 @@ class Grid {
     });
   }
 
+  inGrid(x, y) {
+    if (x >= 0 && x < 60 && y >= 0 && y < 40) {
+      return true;
+    } else {
+      false;
+    }
+  }
+
   draw(ctx) {
     ctx.lineWidth = 10;
     this.cells.forEach ( (row) => {

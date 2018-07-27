@@ -10,14 +10,14 @@ class Cell {
     this.parentNode = null;
     this.distance = null;
     this.neighborCoords = {
-      up: [1, 0],
-      down: [-1, 0],
+      up: [-1, 0],
+      down: [1, 0],
       left: [0, -1],
       right: [0, 1],
       leftUp: [-1, -1],
-      rightUp: [1, 1],
-      rightDown: [1, -1],
-      leftDown: [-1, -1],
+      rightUp: [-1, 1],
+      rightDown: [1, 1],
+      leftDown: [1, -1],
     };
     this.state = {
       type: 'w',
@@ -38,7 +38,7 @@ class Cell {
     this.state.type = "p";
   }
 
-  isCell(cell) {
+  isMatch(cell) {
     if (cell.x === this.x && cell.y === this.y) {
       return true;
     } else {
@@ -51,12 +51,18 @@ class Cell {
     this.childNodes.push(childCell);
   }
 
+  addMoves(moves) {
+    moves.forEach( (child) => {
+      this.makeChild(child);
+    });
+  }
+
   isChild(cell) {
     let children = this.childNodes;
 
     for (let i = 0; i < children.length; i++) {
       let child = children[i];
-      if (child.isCell(cell)) {
+      if (child.isMatch(cell)) {
         return true;
       }
     }
@@ -92,10 +98,56 @@ class Cell {
     return moves;
   }
 
-  checkValidMove(coord) {
-    
+  checkValidMove(x, y) {
+    //Not valid if out of boundary
+    if (!this.grid.inGrid(x, y)) {
+      return false;
+    }
+
+    let parent = this.getParentNode();
+    let grandParent = parent.getParentNode();
+    let validNeighbors = this.neighborsValidCell();
+
+    //if cell is a parentNode, always false
+    // if (cell.isMatch(parent)) {
+    //   return false;
+    // }
+    // below filters all
+
+    //check if the neighboring cells are path or parent or child
+    validNeighbors.forEach( (cell) => {
+      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || this.isChild(cell)) || cell.state.type === "p") {
+        return false;
+      }
+    });
+
+    return true;
   }
 
+  getAllNeighbors() {
+    let directions = Object.keys(this.neighborCoords);
+    let neighbors = [];
+
+    //receives all neighbors
+    directions.forEach( (dir) => {
+      neighbors.push(this.getMove(dir));
+    });
+
+    return neighbors;
+  }
+
+  neighborsValidCell() {
+    let allNeighbors = this.getAllNeighbors();
+    let valid = [];
+    //checks validity of neighboring cells
+    allNeighbors.forEach( (neighbor) => {
+      if (this.grid.inGrid(neighbor[0], neighbor[1])) {
+        valid.push(this.grid.getCell(neighbor[0], neighbor[1]));
+      }
+    });
+
+    return valid;
+  }
 
   draw(ctx) {
     if (this.state.startingCell) {
