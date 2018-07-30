@@ -26,8 +26,13 @@ class Cell {
       genStart: false,
       genEnd: false,
       checked: false,
-      stack: false
+      stack: false,
+      visited: false
     };
+
+    // this.neighborsValidCell.bind(this);
+    // this.getAllNeighbors.bind(this);
+    // this.getParentNode = this.getParentNode.bind(this);
   }
 
   clear() {
@@ -52,14 +57,14 @@ class Cell {
   }
 
   addMoves(moves) {
-    moves.forEach( (child) => {
-      this.makeChild(child);
+    moves.forEach( (move) => {
+      let cell = this.grid.getCell(move[0], move[1]);
+      this.makeChild(cell);
     });
   }
 
   isChild(cell) {
     let children = this.childNodes;
-
     for (let i = 0; i < children.length; i++) {
       let child = children[i];
       if (child.isMatch(cell)) {
@@ -70,13 +75,19 @@ class Cell {
     return false;
   }
 
+  relation(cell) {
+    let parent = this.getParentNode();
+    let grand = parent.getParentNode();
+    return cell.isMatch(grand) || cell.isMatch(parent) || cell.isChild(cell);
+  }
+
   getParentNode() {
-    if (this.state.startCell) {
+    if (this.state.startingCell) {
       return this;
     }
 
-    if (this.parent) {
-      return this.parent;
+    if (this.parentNode) {
+      return this.parentNode;
     }
 
     return;
@@ -98,30 +109,45 @@ class Cell {
     return moves;
   }
 
+  filterValidMoves() {
+    let moves = this.getAllMoves();
+    let cell = this;
+    let validMoves = moves.filter((move) => {
+      return cell.checkValidMove(move[0], move[1]);
+    });
+
+    if (validMoves.length > 0) {
+      this.addMoves(validMoves);
+      return validMoves;
+    } else {
+      return null;
+    }
+  }
+
   checkValidMove(x, y) {
     //Not valid if out of boundary
     if (!this.grid.inGrid(x, y)) {
       return false;
     }
 
+    let cell = this.grid.getCell(x, y);
     let parent = this.getParentNode();
-    let grandParent = parent.getParentNode();
-    let validNeighbors = this.neighborsValidCell();
+    // let grandParent = parent.getParentNode();
+    // let validNeighbors = this.neighborsValidCell();
 
-    //if cell is a parentNode, always false
-    // if (cell.isMatch(parent)) {
-    //   return false;
-    // }
-    // below filters all
+    // if cell is a parentNode, always false
+    if (cell.isMatch(parent)) {
+      return false;
+    }
 
-    //check if the neighboring cells are path or parent or child
-    validNeighbors.forEach( (cell) => {
-      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || this.isChild(cell)) && cell.state.type === "p") {
+    let neighbors = cell.neighborsValidCell();
+    neighbors.forEach( (neighbor) => {
+      if (!(this.relation(neighbor)) && neighbor.state.type === "p") {
         return false;
       }
-    });
 
-    return true;
+      return true;
+    });
   }
 
   getAllNeighbors() {
@@ -152,14 +178,20 @@ class Cell {
   draw(ctx) {
     if (this.state.startingCell) {
       ctx.fillStyle = "#ffff00";
+      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
+      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.type === "w") {
       ctx.fillStyle = "#b6c9ca";
+      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
+    } else if (this.state.type === "p") {
+      ctx.fillStyle = "#3e3eb7";
+      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else {
       ctx.fillStyle = "#000000";
+      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     }
-    ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
   }
 }
 

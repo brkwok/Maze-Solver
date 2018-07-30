@@ -8,6 +8,8 @@ class Grid {
     this.endPos = [59, 39];
     this.startCell = null;
     this.endCell = null;
+
+    this.makeCellStart = this.makeCellStart.bind(this);
   }
 
   fillGrid() {
@@ -51,12 +53,13 @@ class Grid {
   }
 
   validPath(cell) {
-    let validNeighbors = cell.neighborsValidCell;
+    let validNeighbors = cell.neighborsValidCell();
+
     let parent = cell.getParentNode();
     let grandParent = parent.getParentNode();
 
     validNeighbors.forEach( (cell) => {
-      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || this.isChild(cell)) && cell.state.type === "p") {
+      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || parent.isChild(cell)) && cell.state.type === "p") {
         return false;
       }
     });
