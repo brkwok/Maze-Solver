@@ -124,6 +124,21 @@ class Cell {
     }
   }
 
+  checkMakingPaths(x, y) {
+    const invalidPaths = [
+      [x + 1, y + 1],
+      [x + 1, y - 1],
+      [x - 1, y + 1],
+      [x - 1, y - 1],
+      [x + 2, y],
+      [x - 2, y],
+      [x    , y + 2],
+      [x    , y - 2]
+    ];
+
+
+  };
+
   checkValidMove(x, y) {
     //Not valid if out of boundary
     if (!this.grid.inGrid(x, y)) {
@@ -146,8 +161,8 @@ class Cell {
         return false;
       }
 
-      return true;
     });
+    return true;
   }
 
   getAllNeighbors() {

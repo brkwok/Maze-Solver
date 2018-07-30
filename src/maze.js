@@ -16,4 +16,5 @@ document.addEventListener("DOMContentLoaded", () => {
   maze.draw(ctx);
   let generator = new DFSGenerator(maze);
   generator.mazeAnimation(1);
+
 });

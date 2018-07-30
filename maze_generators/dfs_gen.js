@@ -1,3 +1,5 @@
+import * as DFSUtil from '../utils/dfs_util';
+
 class DFSGenerator {
   constructor(grid) {
     this.grid = grid;
@@ -14,7 +16,7 @@ class DFSGenerator {
     this.startGeneration();
     let mazeId = setInterval( () => {
       if (this.stack.length > 0) {
-        let stackCell = this.getRandomStack();
+        let stackCell = this.getNextCell();
         if (this.grid.validPath(stackCell)) {
           this.exploreStack(stackCell);
         }
@@ -31,18 +33,20 @@ class DFSGenerator {
     this.grid.makeCellEnd();
     let startCell = this.grid.startCell;
     startCell.makeToPath();
-    this.stack.push(startCell);
+    // this.stack.push([startCell.x, startCell.y]);
     startCell.state.stack = true;
     startCell.draw(startCell.grid.ctx);
-
     let nextMoves = startCell.filterValidMoves();
     nextMoves.forEach( (move) => {
       let cell = this.grid.getCell(move[0], move[1]);
       cell.state.stack = true;
+      this.stack.push(move);
       cell.draw(this.grid.ctx);
     });
 
-    this.stack.concat(nextMoves);
+    const shuffled = DFSUtil.shuffle(nextMoves);
+    // this.stack.concat(nextMoves);
+    this.stack = shuffled.concat(this.stack);
   }
 
   exploreStack(stackCell) {
@@ -63,30 +67,39 @@ class DFSGenerator {
         cell.draw(this.grid.ctx);
       });
 
-      this.stack.concat(nextMoves);
+      // nextMoves.forEach( (move) => {
+      //   this.stack.push(move);
+      // });
+      // this.stack.concat(nextMoves);
+      const shuffled = DFSUtil.shuffle(nextMoves);
+
+      this.stack = shuffled.concat(this.stack);
     }
     // return nextMoves;
   }
 
-  getRandomStack() {
+  getNextCell() {
     if (this.stack.length === 0) {
       return null;
     }
 
-    let stackSize = this.stack.length;
-    let randNum = Math.floor(Math.random() * stackSize);
-    let randStackCell = this.stack[randNum];
-    this.stack.splice(randNum, 1);
-    randStackCell.state.stack = false;
-    randStackCell.draw(this.grid.ctx);
+    // let stackSize = this.stack.length;
+    // let randNum = Math.floor(Math.random() * stackSize);
+    // let randMovePos = this.stack[randNum];
+    let nextCell = this.stack.shift();
+    // debugger
+    let currCell = this.grid.getCell(nextCell[0], nextCell[1]);
+    // this.stack.splice(randNum, 1);
+    currCell.state.stack = false;
+    currCell.draw(this.grid.ctx);
 
-    return randStackCell;
+    return currCell;
   }
 
   generateMaze() {
     this.startGeneration();
     while (this.stack.length > 0) {
-      let nextCell = this.getRandomStack();
+      let nextCell = this.getNextCell();
 
       if (this.grid.validPath(nextCell)) {
         this.exploreStack(nextCell);
