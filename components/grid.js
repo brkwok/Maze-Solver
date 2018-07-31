@@ -53,7 +53,7 @@ class Grid {
   }
 
   validPath(cell) {
-    let validNeighbors = cell.neighborsValidCell();
+    let validNeighbors = cell.validNeighbors();
 
     let parent = cell.getParentNode();
     let grandParent = parent.getParentNode();

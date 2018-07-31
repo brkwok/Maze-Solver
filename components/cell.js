@@ -78,7 +78,7 @@ class Cell {
   relation(cell) {
     let parent = this.getParentNode();
     let grand = parent.getParentNode();
-    return cell.isMatch(grand) || cell.isMatch(parent) || cell.isChild(cell);
+    return cell.isMatch(grand) || cell.isMatch(parent) || parent.isChild(cell);
   }
 
   getParentNode() {
@@ -88,6 +88,8 @@ class Cell {
 
     if (this.parentNode) {
       return this.parentNode;
+    } else {
+      [this.x, this.y] = [-1, -1];
     }
 
     return;
@@ -103,17 +105,17 @@ class Cell {
     let dir = ["up", "down", "left", "right"];
     let moves = [];
     dir.forEach( (d) => {
+      // let move = this.getMove(d);
       moves.push(this.getMove(d));
     });
 
     return moves;
   }
 
-  filterValidMoves() {
+  getValidMoves() {
     let moves = this.getAllMoves();
-    let cell = this;
-    let validMoves = moves.filter((move) => {
-      return cell.checkValidMove(move[0], move[1]);
+    let validMoves = moves.filter( (move) => {
+      return this.validMove(move);
     });
 
     if (validMoves.length > 0) {
@@ -124,48 +126,80 @@ class Cell {
     }
   }
 
-  checkMakingPaths(x, y) {
-    const invalidPaths = [
-      [x + 1, y + 1],
-      [x + 1, y - 1],
-      [x - 1, y + 1],
-      [x - 1, y - 1],
-      [x + 2, y],
-      [x - 2, y],
-      [x    , y + 2],
-      [x    , y - 2]
-    ];
-
-
-  };
-
-  checkValidMove(x, y) {
-    //Not valid if out of boundary
-    if (!this.grid.inGrid(x, y)) {
+  validMove(coord) {
+    if (!this.grid.inGrid(coord[0], coord[1])) {
       return false;
     }
 
-    let cell = this.grid.getCell(x, y);
+    let nextCell = this.grid.getCell(coord[0], coord[1]);
     let parent = this.getParentNode();
+
+    if (nextCell.isMatch(parent)) {
+      return false;
+    }
+
+    return this.checkMoveValidity(nextCell);
+  }
+
+  // filterValidMoves() {
+  //   let moves = this.getAllMoves();
+  //   let validMoves = moves.filter((move) => {
+  //     return this.checkValidMove(move[0], move[1]);
+  //   });
+
+    // const checkPathMaking = validMoves.filter( (move) => {
+    //   return this.checkMakingPaths(move[0], move[1]);
+    // });
+  //   if (validMoves.length > 0) {
+  //     this.addMoves(validMoves);
+  //     return validMoves;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
+  // checkValidMove(x, y) {
+    //Not valid if out of boundary
+    // if (!this.grid.inGrid(x, y)) {
+    //   return false;
+    // }
+    //
+    // let cell = this.grid.getCell(x, y);
+    // let parent = this.getParentNode();
     // let grandParent = parent.getParentNode();
     // let validNeighbors = this.neighborsValidCell();
 
     // if cell is a parentNode, always false
-    if (cell.isMatch(parent)) {
-      return false;
-    }
+  //   if (cell.isMatch(parent)) {
+  //     return false;
+  //   }
+  //   return this.checkMoveNeighbors(cell);
+  // }
 
-    let neighbors = cell.neighborsValidCell();
-    neighbors.forEach( (neighbor) => {
-      if (!(this.relation(neighbor)) && neighbor.state.type === "p") {
+  checkMoveValidity(cell) {
+    let neighbors = cell.validNeighbors();
+
+    // neighbors.forEach( (neighbor) => {
+    //   if (!(this.relation(neighbor)) && neighbor.state.type === "p") {
+    //     return false;
+    //   }
+    // });
+
+    for (let i = 0; i < neighbors.length; i++) {
+      let neighbor = neighbors[i];
+      // let parent = neighbor.getParentNode();
+      // let grandParent = parent.getParentNode();
+
+      if (!this.relation(neighbor) && neighbor.state.type === "p") {
         return false;
       }
+    }
 
-    });
     return true;
   }
 
-  getAllNeighbors() {
+
+  neighbors() {
     let directions = Object.keys(this.neighborCoords);
     let neighbors = [];
 
@@ -177,36 +211,38 @@ class Cell {
     return neighbors;
   }
 
-  neighborsValidCell() {
-    let allNeighbors = this.getAllNeighbors();
+  validNeighbors() {
+    let allNeighbors = this.neighbors();
     let valid = [];
     //checks validity of neighboring cells
-    allNeighbors.forEach( (neighbor) => {
-      if (this.grid.inGrid(neighbor[0], neighbor[1])) {
-        valid.push(this.grid.getCell(neighbor[0], neighbor[1]));
+    allNeighbors.forEach( (coord) => {
+      if (this.grid.inGrid(coord[0], coord[1])) {
+        valid.push(this.grid.getCell(coord[0], coord[1]));
       }
     });
-
     return valid;
   }
 
   draw(ctx) {
     if (this.state.startingCell) {
       ctx.fillStyle = "#ffff00";
-      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
+      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
-      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
+      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
+    } else if (this.state.stack) {
+      ctx.fillStyle = "#00ffff";
+      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.type === "w") {
       ctx.fillStyle = "#b6c9ca";
-      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
+      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.type === "p") {
       ctx.fillStyle = "#3e3eb7";
-      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
+      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else {
       ctx.fillStyle = "#000000";
-      ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     }
+    ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
   }
 }
 

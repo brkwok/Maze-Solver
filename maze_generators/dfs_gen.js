@@ -17,14 +17,15 @@ class DFSGenerator {
     let mazeId = setInterval( () => {
       if (this.stack.length > 0) {
         let stackCell = this.getNextCell();
+        // stackCell.state.stack = true;
         if (this.grid.validPath(stackCell)) {
           this.exploreStack(stackCell);
+          // stackCell.state.stack = false;
         }
       } else {
         clearInterval(mazeId);
       }
     }, int);
-
     return mazeId;
   }
 
@@ -33,32 +34,38 @@ class DFSGenerator {
     this.grid.makeCellEnd();
     let startCell = this.grid.startCell;
     startCell.makeToPath();
-    // this.stack.push([startCell.x, startCell.y]);
-    startCell.state.stack = true;
+    // // this.stack.push([startCell.x, startCell.y]);
+    // startCell.state.stack = true;
     startCell.draw(startCell.grid.ctx);
-    let nextMoves = startCell.filterValidMoves();
+    // debugger
+    let nextMoves = startCell.getValidMoves();
     nextMoves.forEach( (move) => {
       let cell = this.grid.getCell(move[0], move[1]);
-      cell.state.stack = true;
-      this.stack.push(move);
       cell.draw(this.grid.ctx);
     });
-
+    //
     const shuffled = DFSUtil.shuffle(nextMoves);
-    // this.stack.concat(nextMoves);
-    this.stack = shuffled.concat(this.stack);
+    this.stack = this.stack.concat(shuffled);
+    // this.stack = shuffled.concat(this.stack);
   }
 
   exploreStack(stackCell) {
-    stackCell.makeToPath();
-    stackCell.draw(stackCell.grid.ctx);
+    const parent = stackCell.getParentNode();
+    if (parent.checkMoveValidity(stackCell)) {
+      stackCell.makeToPath();
+      stackCell.draw(stackCell.grid.ctx);
+      stackCell.state.stack = false;
+    } else {
+      // const stackIdx = this.stack.indexOf(stackCell);
+      // this.stack.splice(stackIdx, 1);
+      return;
+    }
     // stackCell.state.stack = false;
     // let stackCellIdx = this.stack.indexOf(stackCell);
     // this.stack.splice(stackCellIdx, 1);
 
     //get next valid moves for cell to move
-    let nextMoves = stackCell.filterValidMoves();
-
+    let nextMoves = stackCell.getValidMoves();
     //add the valid move cells to the stack;
     if (nextMoves) {
       nextMoves.forEach( (move) => {
@@ -66,14 +73,12 @@ class DFSGenerator {
         cell.state.stack = true;
         cell.draw(this.grid.ctx);
       });
-
       // nextMoves.forEach( (move) => {
       //   this.stack.push(move);
       // });
       // this.stack.concat(nextMoves);
       const shuffled = DFSUtil.shuffle(nextMoves);
-
-      this.stack = shuffled.concat(this.stack);
+      this.stack = this.stack.concat(shuffled);
     }
     // return nextMoves;
   }
@@ -86,7 +91,7 @@ class DFSGenerator {
     // let stackSize = this.stack.length;
     // let randNum = Math.floor(Math.random() * stackSize);
     // let randMovePos = this.stack[randNum];
-    let nextCell = this.stack.shift();
+    let nextCell = this.stack.pop();
     // debugger
     let currCell = this.grid.getCell(nextCell[0], nextCell[1]);
     // this.stack.splice(randNum, 1);
@@ -107,7 +112,7 @@ class DFSGenerator {
     }
   }
 
-
+  //
   // generationStart() {
   //   this.grid.makeCellStart();
   //   this.grid.makeCellEnd();
@@ -127,7 +132,7 @@ class DFSGenerator {
   //   let stackIdx = this.stack.indexOf(stackCell);
   //   this.stack.splice(stackIdx, 1);
   //
-  //   let nextMoves = stackCell.filterValidMoves();
+  //   let nextMoves = stackCell.getValidMoves();
   //
   //   if (nextMoves !== null) {
   //     nextMoves.forEach( (move) => {
