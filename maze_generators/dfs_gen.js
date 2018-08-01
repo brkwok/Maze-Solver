@@ -79,6 +79,7 @@ class DFSGenerator {
   }
 
   getNextCell() {
+    console.log(asdfa);
     if (this.stack.length === 0) {
       return null;
     }
