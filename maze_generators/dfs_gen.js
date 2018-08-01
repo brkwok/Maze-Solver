@@ -17,11 +17,8 @@ class DFSGenerator {
     let mazeId = setInterval( () => {
       if (this.stack.length > 0) {
         let stackCell = this.getNextCell();
-        // stackCell.state.stack = true;
-        if (this.grid.validPath(stackCell)) {
-          this.exploreStack(stackCell);
-          // stackCell.state.stack = false;
-        }
+        this.exploreStack(stackCell);
+        stackCell.state.checking = true;
       } else {
         clearInterval(mazeId);
       }
@@ -31,18 +28,20 @@ class DFSGenerator {
 
   startGeneration() {
     this.grid.makeCellStart();
-    this.grid.makeCellEnd();
     let startCell = this.grid.startCell;
     startCell.makeToPath();
     // // this.stack.push([startCell.x, startCell.y]);
     // startCell.state.stack = true;
     startCell.draw(startCell.grid.ctx);
-    // debugger
+    //
     let nextMoves = startCell.getValidMoves();
-    nextMoves.forEach( (move) => {
-      let cell = this.grid.getCell(move[0], move[1]);
-      cell.draw(this.grid.ctx);
-    });
+
+    // if (nextMoves === null) { return; } else {
+      nextMoves.forEach( (move) => {
+        let cell = this.grid.getCell(move[0], move[1]);
+        cell.draw(this.grid.ctx);
+      });
+    // }
     //
     const shuffled = DFSUtil.shuffle(nextMoves);
     this.stack = this.stack.concat(shuffled);
@@ -54,15 +53,11 @@ class DFSGenerator {
     if (parent.checkMoveValidity(stackCell)) {
       stackCell.makeToPath();
       stackCell.draw(stackCell.grid.ctx);
-      stackCell.state.stack = false;
     } else {
       // const stackIdx = this.stack.indexOf(stackCell);
       // this.stack.splice(stackIdx, 1);
       return;
     }
-    // stackCell.state.stack = false;
-    // let stackCellIdx = this.stack.indexOf(stackCell);
-    // this.stack.splice(stackCellIdx, 1);
 
     //get next valid moves for cell to move
     let nextMoves = stackCell.getValidMoves();
@@ -92,7 +87,7 @@ class DFSGenerator {
     // let randNum = Math.floor(Math.random() * stackSize);
     // let randMovePos = this.stack[randNum];
     let nextCell = this.stack.pop();
-    // debugger
+    //
     let currCell = this.grid.getCell(nextCell[0], nextCell[1]);
     // this.stack.splice(randNum, 1);
     currCell.state.stack = false;
@@ -101,7 +96,7 @@ class DFSGenerator {
     return currCell;
   }
 
-  generateMaze() {
+  quickMaze() {
     this.startGeneration();
     while (this.stack.length > 0) {
       let nextCell = this.getNextCell();

@@ -1,5 +1,5 @@
 class Cell {
-  constructor(renderX, renderY, x, y, grid) {
+  constructor(renderX, renderY, x, y, grid, ctx) {
     this.renderX = renderX;
     this.renderY = renderY;
     this.x = x;
@@ -11,13 +11,13 @@ class Cell {
     this.distance = null;
     this.neighborCoords = {
       up: [-1, 0],
-      down: [1, 0],
-      left: [0, -1],
-      right: [0, 1],
-      leftUp: [-1, -1],
       rightUp: [-1, 1],
+      right: [0, 1],
       rightDown: [1, 1],
+      down: [1, 0],
       leftDown: [1, -1],
+      left: [0, -1],
+      leftUp: [-1, -1],
     };
     this.state = {
       type: 'w',
@@ -27,12 +27,11 @@ class Cell {
       genEnd: false,
       checked: false,
       stack: false,
-      visited: false
+      visited: false,
+      checking: false,
+      neighbor: false
     };
-
-    // this.neighborsValidCell.bind(this);
-    // this.getAllNeighbors.bind(this);
-    // this.getParentNode = this.getParentNode.bind(this);
+    this.ctx = ctx;
   }
 
   clear() {
@@ -77,8 +76,9 @@ class Cell {
 
   relation(cell) {
     let parent = this.getParentNode();
-    let grand = parent.getParentNode();
-    return cell.isMatch(grand) || cell.isMatch(parent) || parent.isChild(cell);
+    // let grand = parent.getParentNode();
+    // cell.isMatch(grand) ||
+    return parent.isMatch(cell) || parent.isChild(cell);
   }
 
   getParentNode() {
@@ -89,10 +89,11 @@ class Cell {
     if (this.parentNode) {
       return this.parentNode;
     } else {
-      [this.x, this.y] = [-1, -1];
+      // [this.x, this.y] = [-1, -1];
+      return false;
     }
 
-    return;
+    // return;
   }
 
   getMove(direction) {
@@ -112,6 +113,49 @@ class Cell {
     return moves;
   }
 
+  validMove(coord) {
+    //checks if move is within boundary
+    if (!this.grid.inGrid(coord[0], coord[1])) {
+      return false;
+    }
+
+    let nextMoveCell = this.grid.getCell(coord[0], coord[1]);
+    let parent = this.getParentNode();
+
+    //if nextMoveCell is the parent of curr cell, return false
+    if (nextMoveCell.isMatch(parent)) {
+      return false;
+    }
+    nextMoveCell.state.checking = true;
+    nextMoveCell.draw(nextMoveCell.ctx);
+    debugger
+    let result = this.checkMoveValidity(nextMoveCell);
+    // nextMoveCell.validNeighbors().forEach( n => {
+    //   n.state.neighbor = false;
+    //   n.draw(n.ctx);
+    // });
+    nextMoveCell.state.checking = false;
+    nextMoveCell.draw(nextMoveCell.ctx);
+    return result;
+  }
+
+  checkMoveValidity(moveCell) {
+    //gather all the neighboring cells
+    let neighbors = moveCell.validNeighbors();
+    const testCB = this.relation.bind(this);
+    function testing (neighbors, testCB) {neighbors.forEach(cell =>
+      console.log(testCB(cell)));}
+    //
+    for (let i = 0; i < neighbors.length; i++) {
+      let neighbor = neighbors[i];
+      if (!(this.relation(neighbor)) && neighbor.state.type === "p") {
+
+        return false;
+      }
+    }
+    return true;
+  }
+
   getValidMoves() {
     let moves = this.getAllMoves();
     let validMoves = moves.filter( (move) => {
@@ -125,79 +169,6 @@ class Cell {
       return null;
     }
   }
-
-  validMove(coord) {
-    if (!this.grid.inGrid(coord[0], coord[1])) {
-      return false;
-    }
-
-    let nextCell = this.grid.getCell(coord[0], coord[1]);
-    let parent = this.getParentNode();
-
-    if (nextCell.isMatch(parent)) {
-      return false;
-    }
-
-    return this.checkMoveValidity(nextCell);
-  }
-
-  // filterValidMoves() {
-  //   let moves = this.getAllMoves();
-  //   let validMoves = moves.filter((move) => {
-  //     return this.checkValidMove(move[0], move[1]);
-  //   });
-
-    // const checkPathMaking = validMoves.filter( (move) => {
-    //   return this.checkMakingPaths(move[0], move[1]);
-    // });
-  //   if (validMoves.length > 0) {
-  //     this.addMoves(validMoves);
-  //     return validMoves;
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
-  // checkValidMove(x, y) {
-    //Not valid if out of boundary
-    // if (!this.grid.inGrid(x, y)) {
-    //   return false;
-    // }
-    //
-    // let cell = this.grid.getCell(x, y);
-    // let parent = this.getParentNode();
-    // let grandParent = parent.getParentNode();
-    // let validNeighbors = this.neighborsValidCell();
-
-    // if cell is a parentNode, always false
-  //   if (cell.isMatch(parent)) {
-  //     return false;
-  //   }
-  //   return this.checkMoveNeighbors(cell);
-  // }
-
-  checkMoveValidity(cell) {
-    let neighbors = cell.validNeighbors();
-
-    // neighbors.forEach( (neighbor) => {
-    //   if (!(this.relation(neighbor)) && neighbor.state.type === "p") {
-    //     return false;
-    //   }
-    // });
-
-    for (let i = 0; i < neighbors.length; i++) {
-      let neighbor = neighbors[i];
-      // let parent = neighbor.getParentNode();
-      // let grandParent = parent.getParentNode();
-
-      if (!this.relation(neighbor) && neighbor.state.type === "p") {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
 
   neighbors() {
     let directions = Object.keys(this.neighborCoords);
@@ -214,31 +185,31 @@ class Cell {
   validNeighbors() {
     let allNeighbors = this.neighbors();
     let valid = [];
-    //checks validity of neighboring cells
-    allNeighbors.forEach( (coord) => {
-      if (this.grid.inGrid(coord[0], coord[1])) {
-        valid.push(this.grid.getCell(coord[0], coord[1]));
+
+    for (let i = 0; i < allNeighbors.length; i++) {
+      let neighborCoord = allNeighbors[i];
+      if (this.grid.inGrid(neighborCoord[0], neighborCoord[1])) {
+        valid.push(this.grid.getCell(neighborCoord[0], neighborCoord[1]));
       }
-    });
+    }
     return valid;
   }
+
+
 
   draw(ctx) {
     if (this.state.startingCell) {
       ctx.fillStyle = "#ffff00";
-      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
-      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
+    } else if (this.state.checking) {
+      ctx.fillStyle = "#ffc9ff";
     } else if (this.state.stack) {
       ctx.fillStyle = "#00ffff";
-      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.type === "w") {
       ctx.fillStyle = "#b6c9ca";
-      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else if (this.state.type === "p") {
       ctx.fillStyle = "#3e3eb7";
-      // ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
     } else {
       ctx.fillStyle = "#000000";
     }

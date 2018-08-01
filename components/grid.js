@@ -8,17 +8,16 @@ class Grid {
     this.endPos = [59, 39];
     this.startCell = null;
     this.endCell = null;
-
-    this.makeCellStart = this.makeCellStart.bind(this);
+    this.getCell = this.getCell.bind(this);
   }
 
-  fillGrid() {
+  fillGrid(ctx) {
     for (let x = 0; x < 60; x++) {
       let row = [];
       for (let y = 0; y < 40; y++) {
         let cellRow = (x * 10) + 10;
         let cellCol = (y * 10) + 10;
-        let cell = new Cell(cellRow, cellCol, x, y, this);
+        let cell = new Cell(cellRow, cellCol, x, y, this, ctx);
         row.push(cell);
       }
       this.cells.push(row);
@@ -26,6 +25,9 @@ class Grid {
   }
 
   getCell(x, y) {
+    if((x < 0) || (y < 0) || (x >= 60) || (y >= 40)) {
+      return false;
+    }
     return this.cells[x][y];
   }
 

@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // generateMaze(ctx);
 
   let maze = new Grid(ctx);
-  maze.fillGrid();
+  maze.fillGrid(ctx);
   maze.draw(ctx);
   let generator = new DFSGenerator(maze);
-  generator.mazeAnimation(1);
+  generator.mazeAnimation(20);
 
 });
