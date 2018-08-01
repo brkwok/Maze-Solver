@@ -70,7 +70,6 @@ class Cell {
       left:      this.bounds(leftX,  y)     ? this.grid.getCell(leftX, y) : "",
       leftUp:    this.bounds(leftX,  upY)   ? this.grid.getCell(leftX, upY) : "",
     };
-    debugger
   }
 
   clear() {
