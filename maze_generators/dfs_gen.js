@@ -36,12 +36,12 @@ class DFSGenerator {
     //
     let nextMoves = startCell.getValidMoves();
 
-    // if (nextMoves === null) { return; } else {
+    if (nextMoves === null) { return; } else {
       nextMoves.forEach( (move) => {
         let cell = this.grid.getCell(move[0], move[1]);
         cell.draw(this.grid.ctx);
       });
-    // }
+    }
     //
     const shuffled = DFSUtil.shuffle(nextMoves);
     this.stack = this.stack.concat(shuffled);
@@ -79,7 +79,6 @@ class DFSGenerator {
   }
 
   getNextCell() {
-    console.log(asdfa);
     if (this.stack.length === 0) {
       return null;
     }

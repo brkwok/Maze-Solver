@@ -22,9 +22,15 @@ class Grid {
       }
       this.cells.push(row);
     }
+    this.cells.forEach(row => {
+      row.forEach(cell => {
+        cell.setNeighbors();
+      });
+    });
   }
 
   getCell(x, y) {
+
     if((x < 0) || (y < 0) || (x >= 60) || (y >= 40)) {
       return false;
     }
