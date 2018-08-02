@@ -79,6 +79,7 @@ class Cell {
   }
 
   clear() {
+    //wipes off the cell clean
     this.state.checked =  false;
     this.state.childNodes = [];
     this.state.parentNode = null;
@@ -92,6 +93,7 @@ class Cell {
   }
 
   isMatch(cell) {
+    //checks for match
     if (cell.x === this.x && cell.y === this.y) {
       return true;
     } else {
@@ -105,6 +107,7 @@ class Cell {
   }
 
   addMoves(moves) {
+    //makes child parent connection between the cells
     moves.forEach( (move) => {
       let cell = this.grid.getCell(move[0], move[1]);
       this.makeChild(cell);
@@ -123,13 +126,6 @@ class Cell {
     return false;
   }
 
-  relation(cell) {
-    let parent = this.getParentNode();
-    // let grand = parent.getParentNode();
-    // cell.isMatch(grand) ||
-    return parent.isMatch(cell) || parent.isChild(cell);
-  }
-
   getParentNode() {
     if (this.state.startingCell) {
       return this;
@@ -138,11 +134,9 @@ class Cell {
     if (this.parentNode) {
       return this.parentNode;
     } else {
-      // [this.x, this.y] = [-1, -1];
       return -1;
     }
 
-    // return;
   }
 
   getMove(direction) {
