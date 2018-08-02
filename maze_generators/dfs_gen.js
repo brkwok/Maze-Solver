@@ -79,10 +79,7 @@ class DFSGenerator {
     this.startGeneration();
     while (this.stack.length > 0) {
       let nextCell = this.getNextCell();
-
-      if (this.grid.validPath(nextCell)) {
-        this.exploreStack(nextCell);
-      }
+      this.exploreStack(nextCell);
     }
   }
 }

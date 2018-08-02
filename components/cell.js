@@ -80,6 +80,11 @@ class Cell {
 
   clear() {
     this.state.checked =  false;
+    this.state.childNodes = [];
+    this.state.parentNode = null;
+    this.state.type = 'w';
+    this.state.stack = false;
+    this.state.checking = false;
   }
 
   makeToPath() {

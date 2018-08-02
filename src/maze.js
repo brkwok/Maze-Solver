@@ -16,9 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let maze = new Grid(ctx);
   maze.fillGrid(ctx);
   maze.draw(ctx);
-  let generator = new DFSGenerator(maze);
-  // generator.mazeAnimation(1);
-  let generator2 = new BFSGenerator(maze);
+
   GeneratorHandler.generateMaze(ctx);
-  generator2.mazeAnimation(1);
 });
