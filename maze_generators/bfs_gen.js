@@ -1,15 +1,9 @@
-import * as DFSUtil from '../utils/dfs_util';
+import * as genUtil from '../utils/dfs_util';
 
-class DFSGenerator {
+class BFSGenerator {
   constructor(grid) {
     this.grid = grid;
     this.stack = [];
-
-    // this.startGeneration = this.startGeneration.bind(this);
-    // this.mazeAnimation = this.mazeAnimation.bind(this);
-    // this.exploreStack = this.exploreStack.bind(this);
-    // this.getRandomStack = this.getRandomStack.bind(this);
-    // this.generateMaze = this.generateMaze.bind(this);
   }
 
   mazeAnimation(int) {
@@ -23,6 +17,7 @@ class DFSGenerator {
         clearInterval(mazeId);
       }
     }, int);
+
     return mazeId;
   }
 
@@ -30,22 +25,17 @@ class DFSGenerator {
     this.grid.makeCellStart();
     let startCell = this.grid.startCell;
     startCell.makeToPath();
-    // // this.stack.push([startCell.x, startCell.y]);
-    // startCell.state.stack = true;
     startCell.draw(startCell.grid.ctx);
-    //
     let nextMoves = startCell.getValidMoves();
 
-    // if (nextMoves === null) { return; } else {
       nextMoves.forEach( (move) => {
         let cell = this.grid.getCell(move[0], move[1]);
         cell.draw(this.grid.ctx);
       });
-    // }
-    //
-    const shuffled = DFSUtil.shuffle(nextMoves);
+
+
+    const shuffled = genUtil.shuffle(nextMoves);
     this.stack = this.stack.concat(shuffled);
-    // this.stack = shuffled.concat(this.stack);
   }
 
   exploreStack(stackCell) {
@@ -54,8 +44,6 @@ class DFSGenerator {
       stackCell.makeToPath();
       stackCell.draw(stackCell.grid.ctx);
     } else {
-      // const stackIdx = this.stack.indexOf(stackCell);
-      // this.stack.splice(stackIdx, 1);
       return;
     }
 
@@ -68,14 +56,10 @@ class DFSGenerator {
         cell.state.stack = true;
         cell.draw(this.grid.ctx);
       });
-      // nextMoves.forEach( (move) => {
-      //   this.stack.push(move);
-      // });
-      // this.stack.concat(nextMoves);
-      const shuffled = DFSUtil.shuffle(nextMoves);
+
+      const shuffled = genUtil.shuffle(nextMoves);
       this.stack = this.stack.concat(shuffled);
     }
-    // return nextMoves;
   }
 
   getNextCell() {
@@ -83,29 +67,19 @@ class DFSGenerator {
       return null;
     }
 
-    // let stackSize = this.stack.length;
-    // let randNum = Math.floor(Math.random() * stackSize);
-    // let randMovePos = this.stack[randNum];
-    let nextCell = this.stack.pop();
-    //
-    let currCell = this.grid.getCell(nextCell[0], nextCell[1]);
-    // this.stack.splice(randNum, 1);
+    let stackSize = this.stack.length;
+    let randNum = Math.floor(Math.random() * stackSize);
+    let randMovePos = this.stack[randNum];
+
+    let currCell = this.grid.getCell(randMovePos[0], randMovePos[1]);
+
+    this.stack.splice(randNum, 1);
+
     currCell.state.stack = false;
     currCell.draw(this.grid.ctx);
 
     return currCell;
   }
-
-  quickMaze() {
-    this.startGeneration();
-    while (this.stack.length > 0) {
-      let nextCell = this.getNextCell();
-
-      if (this.grid.validPath(nextCell)) {
-        this.exploreStack(nextCell);
-      }
-    }
-  }
 }
 
-export default DFSGenerator;
+export default BFSGenerator;
