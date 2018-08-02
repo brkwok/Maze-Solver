@@ -1,6 +1,7 @@
 // import { generateMaze } from '../utils/generator_handler';
 import DFSGenerator from '../maze_generators/dfs_gen';
 import Grid from '../components/grid';
+import * as GeneratorHandler from '../utils/generator_handler';
 
 document.addEventListener("DOMContentLoaded", () => {
   const canvasEl = document.getElementById("canvasEl");
@@ -15,6 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
   maze.fillGrid(ctx);
   maze.draw(ctx);
   let generator = new DFSGenerator(maze);
-  generator.mazeAnimation(20);
-
+  // generator.mazeAnimation(1);
+  GeneratorHandler.generateMaze(ctx);
 });

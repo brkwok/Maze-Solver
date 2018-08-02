@@ -41,6 +41,12 @@ class Cell {
       checking: false,
       neighbor: false
     };
+    this.vectorDir = {
+      right : ["up", "rightUp", "right", "rightDown", "down"],
+      left  : ["up", "leftUp", "left", "leftDown", "down"],
+      up    : ["left", "leftUp", "up", "rightUp", "right"],
+      down  : ["left", "leftDown", "down", "rightDown", "right"]
+    };
     this.ctx = ctx;
 
   }
@@ -61,14 +67,14 @@ class Cell {
     const rightX = x + 1;
     const leftX = x - 1;
     this.neighborCells = {
-      up:        this.bounds(x,      upY)   ? this.grid.getCell(x, upY) : "",
-      rightUp:   this.bounds(rightX, upY)   ? this.grid.getCell(rightX, upY) : "",
-      right:     this.bounds(rightX, y)     ? this.grid.getCell(rightX, y) : "",
+      up:        this.bounds(x,      upY)   ? this.grid.getCell(x, upY)        : "",
+      rightUp:   this.bounds(rightX, upY)   ? this.grid.getCell(rightX, upY)   : "",
+      right:     this.bounds(rightX, y)     ? this.grid.getCell(rightX, y)     : "",
       rightDown: this.bounds(rightX, downY) ? this.grid.getCell(rightX, downY) : "",
-      down:      this.bounds(x,      downY) ? this.grid.getCell(x, downY) : "",
-      leftDown:  this.bounds(leftX,  downY) ? this.grid.getCell(leftX, downY) : "",
-      left:      this.bounds(leftX,  y)     ? this.grid.getCell(leftX, y) : "",
-      leftUp:    this.bounds(leftX,  upY)   ? this.grid.getCell(leftX, upY) : "",
+      down:      this.bounds(x,      downY) ? this.grid.getCell(x, downY)      : "",
+      leftDown:  this.bounds(leftX,  downY) ? this.grid.getCell(leftX, downY)  : "",
+      left:      this.bounds(leftX,  y)     ? this.grid.getCell(leftX, y)      : "",
+      leftUp:    this.bounds(leftX,  upY)   ? this.grid.getCell(leftX, upY)    : "",
     };
   }
 
@@ -128,7 +134,7 @@ class Cell {
       return this.parentNode;
     } else {
       // [this.x, this.y] = [-1, -1];
-      return false;
+      return -1;
     }
 
     // return;
@@ -159,40 +165,63 @@ class Cell {
 
     let nextMoveCell = this.grid.getCell(coord[0], coord[1]);
     let parent = this.getParentNode();
-
+    debugger
     //if nextMoveCell is the parent of curr cell, return false
     if (nextMoveCell.isMatch(parent)) {
       return false;
     }
-    nextMoveCell.state.checking = true;
-    nextMoveCell.draw(nextMoveCell.ctx);
 
-    let result = this.checkMoveValidity(nextMoveCell);
-    // nextMoveCell.validNeighbors().forEach( n => {
-    //   n.state.neighbor = false;
-    //   n.draw(n.ctx);
-    // });
-    nextMoveCell.state.checking = false;
-    nextMoveCell.draw(nextMoveCell.ctx);
-    return result;
+    return this.checkMoveValidity(nextMoveCell);
+  }
+
+  removeChild(cell) {
+    let children = this.childNodes;
+    let valids = [];
+    for (let i = 0; i < children.length; i++) {
+      let child = children[i];
+      if (!child.isMatch(cell)) {
+        valids.push(child);
+      }
+    }
   }
 
   checkMoveValidity(moveCell) {
-    //gather all the neighboring cells
-    let neighbors = moveCell.validNeighbors();
-    const testCB = this.relation.bind(this);
-    function testing (neighbors, testCB) {neighbors.forEach(cell =>
-      console.log(testCB(cell)));}
-    //
-    for (let i = 0; i < neighbors.length; i++) {
-      let neighbor = neighbors[i];
-      if (!(this.relation(neighbor)) && neighbor.state.type === "p") {
-
+    let validNeighbors = this.validNeighbors(moveCell);
+    debugger
+    for (let i = 0; i < validNeighbors.length; i++) {
+      let neighbor = validNeighbors[i];
+      if (neighbor.state.type === "p") {
         return false;
       }
     }
+
     return true;
   }
+
+
+  vector(moveCell) {
+    this.makeChild(moveCell);
+    let parent = moveCell.getParentNode();
+    let [px, py] = [parent.x, parent.y];
+    let [mx, my] = [moveCell.x, moveCell.y];
+    debugger
+    let vector;
+    let [dirx, diry] = [mx - px, my - py];
+    this.removeChild(moveCell);
+
+    if (dirx === 1 && diry === 0) {
+      vector = "right";
+    } else if (dirx === -1 && diry === 0) {
+      vector = "left";
+    } else if (dirx === 0 && diry === 1) {
+      vector = "down";
+    } else {
+      vector = "up";
+    }
+
+    return vector;
+  }
+
 
   getValidMoves() {
     let moves = this.getAllMoves();
@@ -200,6 +229,7 @@ class Cell {
       return this.validMove(move);
     });
 
+    debugger
     if (validMoves.length > 0) {
       this.addMoves(validMoves);
       return validMoves;
@@ -208,29 +238,34 @@ class Cell {
     }
   }
 
-  neighbors() {
-    let directions = Object.keys(this.neighborCoords);
-    let neighbors = [];
+  // neighbors() {
+  //   let directions = Object.keys(this.neighborCoords);
+  //   let neighbors = [];
+  //
+  //   //receives all neighbors
+  //   directions.forEach( (dir) => {
+  //     neighbors.push(this.getMove(dir));
+  //   });
+  //
+  //   return neighbors;
+  // }
 
-    //receives all neighbors
-    directions.forEach( (dir) => {
-      neighbors.push(this.getMove(dir));
-    });
+  validNeighbors(moveCell) {
+    let vector = this.vector(moveCell);
+    let vectorDir = this.vectorDir[vector];
+    moveCell.setNeighbors();
+    let valids =[];
 
-    return neighbors;
-  }
+    for (let i = 0; i < vectorDir.length; i++) {
+      let vect = vectorDir[i];
 
-  validNeighbors() {
-    let allNeighbors = this.neighbors();
-    let valid = [];
-
-    for (let i = 0; i < allNeighbors.length; i++) {
-      let neighborCoord = allNeighbors[i];
-      if (this.grid.inGrid(neighborCoord[0], neighborCoord[1])) {
-        valid.push(this.grid.getCell(neighborCoord[0], neighborCoord[1]));
+      if (moveCell.neighborCells[vect] === "") {
+        continue;
+      } else {
+        valids.push(moveCell.neighborCells[vect]);
       }
     }
-    return valid;
+    return valids;
   }
 
 

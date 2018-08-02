@@ -9,6 +9,6 @@ export const generateMaze = (ctx) => {
     grid.resetGrid();
     grid.fillGrid(ctx);
     grid.draw(ctx);
-    dfs.mazeAnimation(1);
+    dfs.mazeAnimation(10);
   });
 };
