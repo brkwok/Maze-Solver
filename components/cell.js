@@ -165,7 +165,7 @@ class Cell {
 
     let nextMoveCell = this.grid.getCell(coord[0], coord[1]);
     let parent = this.getParentNode();
-    debugger
+
     //if nextMoveCell is the parent of curr cell, return false
     if (nextMoveCell.isMatch(parent)) {
       return false;
@@ -187,7 +187,7 @@ class Cell {
 
   checkMoveValidity(moveCell) {
     let validNeighbors = this.validNeighbors(moveCell);
-    debugger
+
     for (let i = 0; i < validNeighbors.length; i++) {
       let neighbor = validNeighbors[i];
       if (neighbor.state.type === "p") {
@@ -198,13 +198,12 @@ class Cell {
     return true;
   }
 
-
   vector(moveCell) {
     this.makeChild(moveCell);
     let parent = moveCell.getParentNode();
     let [px, py] = [parent.x, parent.y];
     let [mx, my] = [moveCell.x, moveCell.y];
-    debugger
+
     let vector;
     let [dirx, diry] = [mx - px, my - py];
     this.removeChild(moveCell);
@@ -222,14 +221,12 @@ class Cell {
     return vector;
   }
 
-
   getValidMoves() {
     let moves = this.getAllMoves();
     let validMoves = moves.filter( (move) => {
       return this.validMove(move);
     });
 
-    debugger
     if (validMoves.length > 0) {
       this.addMoves(validMoves);
       return validMoves;
@@ -237,18 +234,6 @@ class Cell {
       return null;
     }
   }
-
-  // neighbors() {
-  //   let directions = Object.keys(this.neighborCoords);
-  //   let neighbors = [];
-  //
-  //   //receives all neighbors
-  //   directions.forEach( (dir) => {
-  //     neighbors.push(this.getMove(dir));
-  //   });
-  //
-  //   return neighbors;
-  // }
 
   validNeighbors(moveCell) {
     let vector = this.vector(moveCell);
@@ -267,8 +252,6 @@ class Cell {
     }
     return valids;
   }
-
-
 
   draw(ctx) {
     if (this.state.startingCell) {
@@ -292,13 +275,3 @@ class Cell {
 
 
 export default Cell;
-
-
-// up: this.grid.getCell(this.x, this.y-1),
-// rightUp: this.grid.getCell(this.x+1, this.y-1),
-// right: this.grid.getCell(this.x+1, this.y),
-// rightDown: this.grid.getCell(this.x+1, this.y+1),
-// down: this.grid.getCell(this.x, this.y+1),
-// leftDown: this.grid.getCell(this.x-1, -this.y+1),
-// left: this.grid.getCell(this.x-1, this.y),
-// leftUp: this.grid.getCell(this.x-1, this.y-1),

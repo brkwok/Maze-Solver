@@ -4,12 +4,6 @@ class DFSGenerator {
   constructor(grid) {
     this.grid = grid;
     this.stack = [];
-
-    // this.startGeneration = this.startGeneration.bind(this);
-    // this.mazeAnimation = this.mazeAnimation.bind(this);
-    // this.exploreStack = this.exploreStack.bind(this);
-    // this.getRandomStack = this.getRandomStack.bind(this);
-    // this.generateMaze = this.generateMaze.bind(this);
   }
 
   mazeAnimation(int) {
@@ -30,19 +24,15 @@ class DFSGenerator {
     this.grid.makeCellStart();
     let startCell = this.grid.startCell;
     startCell.makeToPath();
-    // // this.stack.push([startCell.x, startCell.y]);
-    // startCell.state.stack = true;
     startCell.draw(startCell.grid.ctx);
-    //
+
     let nextMoves = startCell.getValidMoves();
 
-    // if (nextMoves === null) { return; } else {
-      nextMoves.forEach( (move) => {
-        let cell = this.grid.getCell(move[0], move[1]);
-        cell.draw(this.grid.ctx);
-      });
-    // }
-    //
+    nextMoves.forEach( (move) => {
+      let cell = this.grid.getCell(move[0], move[1]);
+      cell.draw(this.grid.ctx);
+    });
+
     const shuffled = DFSUtil.shuffle(nextMoves);
     this.stack = this.stack.concat(shuffled);
     // this.stack = shuffled.concat(this.stack);
@@ -54,8 +44,6 @@ class DFSGenerator {
       stackCell.makeToPath();
       stackCell.draw(stackCell.grid.ctx);
     } else {
-      // const stackIdx = this.stack.indexOf(stackCell);
-      // this.stack.splice(stackIdx, 1);
       return;
     }
 
@@ -68,14 +56,10 @@ class DFSGenerator {
         cell.state.stack = true;
         cell.draw(this.grid.ctx);
       });
-      // nextMoves.forEach( (move) => {
-      //   this.stack.push(move);
-      // });
-      // this.stack.concat(nextMoves);
+
       const shuffled = DFSUtil.shuffle(nextMoves);
       this.stack = this.stack.concat(shuffled);
     }
-    // return nextMoves;
   }
 
   getNextCell() {
@@ -83,13 +67,8 @@ class DFSGenerator {
       return null;
     }
 
-    // let stackSize = this.stack.length;
-    // let randNum = Math.floor(Math.random() * stackSize);
-    // let randMovePos = this.stack[randNum];
     let nextCell = this.stack.pop();
-    //
     let currCell = this.grid.getCell(nextCell[0], nextCell[1]);
-    // this.stack.splice(randNum, 1);
     currCell.state.stack = false;
     currCell.draw(this.grid.ctx);
 
