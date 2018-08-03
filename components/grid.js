@@ -5,7 +5,6 @@ class Grid {
     this.ctx = ctx;
     this.cells = [];
     this.startPos = [0, 0];
-    this.endPos = [59, 39];
     this.startCell = null;
     this.endCell = null;
     this.getCell = this.getCell.bind(this);
@@ -30,7 +29,6 @@ class Grid {
   }
 
   getCell(x, y) {
-
     if((x < 0) || (y < 0) || (x >= 60) || (y >= 40)) {
       return false;
     }
@@ -44,13 +42,8 @@ class Grid {
     this.startCell = start;
   }
 
-  makeCellEnd() {
-    const end = this.getCell(this.endPos[0], this.endPos[1]);
-    end.state.endingCell = true;
-    this.endCell = end;
-  }
-
   resetGrid() {
+    this.endCell = null;
     this.cells.forEach( (row) => {
       row.forEach( (cell) => {
         cell.clear();

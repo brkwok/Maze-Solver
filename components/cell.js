@@ -86,6 +86,7 @@ class Cell {
     this.state.type = 'w';
     this.state.stack = false;
     this.state.checking = false;
+    this.state.endingCell = false;
   }
 
   makeToPath() {

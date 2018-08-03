@@ -1,4 +1,4 @@
-import * as genUtil from '../utils/dfs_util';
+import * as GenUtil from '../utils/gen_util';
 
 class BFSGenerator {
   constructor(grid) {
@@ -14,6 +14,7 @@ class BFSGenerator {
         this.exploreStack(stackCell);
         stackCell.state.checking = true;
       } else {
+        this.getEndCell();
         clearInterval(mazeId);
       }
     }, int);
@@ -34,7 +35,7 @@ class BFSGenerator {
       });
 
 
-    const shuffled = genUtil.shuffle(nextMoves);
+    const shuffled = GenUtil.shuffle(nextMoves);
     this.stack = this.stack.concat(shuffled);
   }
 
@@ -57,7 +58,7 @@ class BFSGenerator {
         cell.draw(this.grid.ctx);
       });
 
-      const shuffled = genUtil.shuffle(nextMoves);
+      const shuffled = GenUtil.shuffle(nextMoves);
       this.stack = this.stack.concat(shuffled);
     }
   }
@@ -70,15 +71,26 @@ class BFSGenerator {
     let stackSize = this.stack.length;
     let randNum = Math.floor(Math.random() * stackSize);
     let randMovePos = this.stack[randNum];
-
+    // let pos = this.stack.shift();
     let currCell = this.grid.getCell(randMovePos[0], randMovePos[1]);
-
+    // let currCell = this.grid.getCell(pos[0], pos[1]);
     this.stack.splice(randNum, 1);
-
     currCell.state.stack = false;
     currCell.draw(this.grid.ctx);
 
     return currCell;
+  }
+
+  getEndCell() {
+    while(!this.grid.endCell) {
+      let endCoord = GenUtil.randomPos();
+      let cell = this.grid.getCell(endCoord[0], endCoord[1]);
+
+      if (cell.state.type === "p") {
+        GenUtil.endCell(cell);
+        break;
+      }
+    }
   }
 }
 

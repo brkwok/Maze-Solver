@@ -1,4 +1,4 @@
-import * as DFSUtil from '../utils/dfs_util';
+import * as GenUtil from '../utils/gen_util';
 
 class DFSGenerator {
   constructor(grid) {
@@ -14,6 +14,7 @@ class DFSGenerator {
         this.exploreStack(stackCell);
         stackCell.state.checking = true;
       } else {
+        this.getEndCell();
         clearInterval(mazeId);
       }
     }, int);
@@ -33,9 +34,9 @@ class DFSGenerator {
       cell.draw(this.grid.ctx);
     });
 
-    const shuffled = DFSUtil.shuffle(nextMoves);
+
+    const shuffled = GenUtil.shuffle(nextMoves);
     this.stack = this.stack.concat(shuffled);
-    // this.stack = shuffled.concat(this.stack);
   }
 
   exploreStack(stackCell) {
@@ -57,7 +58,8 @@ class DFSGenerator {
         cell.draw(this.grid.ctx);
       });
 
-      const shuffled = DFSUtil.shuffle(nextMoves);
+      //randomizes next possible moves
+      const shuffled = GenUtil.shuffle(nextMoves);
       this.stack = this.stack.concat(shuffled);
     }
   }
@@ -67,6 +69,7 @@ class DFSGenerator {
       return null;
     }
 
+    //gets the random cell from the head of the node tree
     let nextCell = this.stack.pop();
     let currCell = this.grid.getCell(nextCell[0], nextCell[1]);
     currCell.state.stack = false;
@@ -80,6 +83,19 @@ class DFSGenerator {
     while (this.stack.length > 0) {
       let nextCell = this.getNextCell();
       this.exploreStack(nextCell);
+    }
+
+    this.getEndCell();
+  }
+
+  getEndCell() {
+    while(!this.grid.endCell) {
+      let endCoord = GenUtil.randomPos();
+      let cell = this.grid.getCell(endCoord[0], endCoord[1]);
+      if (cell.state.type === "p") {
+        GenUtil.endCell(cell);
+        break;
+      }
     }
   }
 }

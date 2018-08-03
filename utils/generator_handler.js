@@ -18,6 +18,7 @@ export const generateMaze = (ctx) => {
     grid.resetGrid();
     grid.fillGrid(ctx);
     grid.draw(ctx);
+    $("button").prop("disabled", true);
     dfs.mazeAnimation(1);
   });
 
@@ -25,6 +26,7 @@ export const generateMaze = (ctx) => {
     grid.resetGrid();
     grid.fillGrid(ctx);
     grid.draw(ctx);
+    $("button").prop("disabled", true);
     bfs.mazeAnimation(1);
   });
 };
