@@ -1,0 +1,30 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+}
+
+.title {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.gen-buttons {
+  width: 100px;
+  font-size: 12px;
+  padding: 10px 5px;
+  border-radius: 5px;
+  margin: 0 15px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  transition: 0.5s;
+}
+
+.gen-buttons:hover {
+  background: lightgrey;
+  cursor: pointer;
+}

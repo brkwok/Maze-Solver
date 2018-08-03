@@ -4,14 +4,21 @@
     <meta charset="utf-8">
     <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css_reset.css">
+    <link rel="stylesheet" href="./assets/maze.css">
     <script src="bundle.js"></script>
   </head>
   <body>
-    <canvas id="canvasEl"></canvas>
+    <div class="title">Maze Solver</div>
+    <section>
+      <p>Click on buttons below to randomly generate a maze</p>
+    </section>
     <div class="generators">
-      <button id="dfs-gen">DFS</button>
-      <button id="bfs-gen">BFS</button>
-      <button id="quick-gen">Quick Maze</button>
+      <button class="gen-buttons" id="dfs-gen">Depth First</button>
+      <button class="gen-buttons" id="bfs-gen">Breadth First</button>
+      <button class="gen-buttons" id="quick-gen">Quick Maze</button>
     </div>
+    <canvas id="canvasEl"></canvas>
   </body>
 </html>
