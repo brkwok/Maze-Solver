@@ -16,6 +16,7 @@ class BFSGenerator {
       } else {
         this.getEndCell();
         clearInterval(mazeId);
+        $("button").prop("disabled", false);
       }
     }, int);
 

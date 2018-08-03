@@ -16,6 +16,7 @@ class DFSGenerator {
       } else {
         this.getEndCell();
         clearInterval(mazeId);
+        $("button").prop("disabled", false);
       }
     }, int);
     return mazeId;
