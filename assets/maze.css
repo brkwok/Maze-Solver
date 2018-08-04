@@ -15,7 +15,7 @@ body {
 
 .gen-buttons {
   width: 100px;
-  font-size: 12px;
+  font-size: 13px;
   padding: 10px 5px;
   border-radius: 5px;
   margin: 20px 15px;
@@ -25,4 +25,8 @@ body {
 .gen-buttons:hover {
   background: lightgrey;
   cursor: pointer;
+}
+
+.gen-buttons:disabled {
+  background: lightgrey;
 }

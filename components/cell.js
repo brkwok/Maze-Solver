@@ -255,17 +255,17 @@ class Cell {
 
   draw(ctx) {
     if (this.state.startingCell) {
-      ctx.fillStyle = "#ffff00";
+      ctx.fillStyle = "#3366ff";
     } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
     } else if (this.state.checking) {
       ctx.fillStyle = "#ffc9ff";
     } else if (this.state.stack) {
-      ctx.fillStyle = "#00ffff";
+      ctx.fillStyle = "#e6e600";
     } else if (this.state.type === "w") {
-      ctx.fillStyle = "#b6c9ca";
+      ctx.fillStyle = "#f5f5dc";
     } else if (this.state.type === "p") {
-      ctx.fillStyle = "#3e3eb7";
+      ctx.fillStyle = "#86b300";
     } else {
       ctx.fillStyle = "#000000";
     }
