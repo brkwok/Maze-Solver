@@ -255,7 +255,7 @@ class Cell {
 
   draw(ctx) {
     if (this.state.startingCell) {
-      ctx.fillStyle = "#3366ff";
+      ctx.fillStyle = "#0000ff";
     } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
     } else if (this.state.checking) {
