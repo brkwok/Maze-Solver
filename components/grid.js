@@ -11,6 +11,7 @@ class Grid {
   }
 
   fillGrid(ctx) {
+    this.cells = [];
     for (let x = 0; x < 60; x++) {
       let row = [];
       for (let y = 0; y < 40; y++) {
@@ -93,11 +94,19 @@ class Grid {
   }
 
   draw(ctx) {
-    this.cells.forEach ( (row) => {
-      row.forEach( (cell) => {
-        cell.draw(ctx);
-      });
-    });
+  //   this.cells.forEach ( (row) => {
+  //     row.forEach( (cell) => {
+  //       cell.draw(ctx);
+  //     });
+  //   });
+  // }
+  for (let i = 0; i < this.cells.length; i++) {
+    let row = this.cells[i];
+    for (let j = 0; j< row.length; j++) {
+      let cell = row[j];
+      cell.draw(ctx);
+    }
+  }
   }
 }
 

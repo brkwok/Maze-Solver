@@ -39,7 +39,6 @@ export const generateMaze = (ctx) => {
 
   $("#bfs-solv").click( () => {
     grid.resetSolution();
-    grid.draw(ctx);
     $("button").prop("disabled", true);
     bfsSolver.solve();
   });
