@@ -1,11 +1,23 @@
 body {
-  font-family: 'Raleway', sans-serif;
   margin: 0 auto;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+}
+
+.maze-wrapper {
+  /* margin: 0 auto; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 50px;
+}
+
+.maze-canvas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
@@ -29,4 +41,31 @@ body {
 
 .gen-buttons:disabled {
   background: lightgrey;
+}
+
+.links-wrapper {
+  margin-top: 25px;
+}
+
+.fab {
+  font-size: 30px;
+}
+
+.fa-linkedin {
+  color: #0069cc;
+}
+
+.fa-github {
+  color: black;
+}
+
+.logo-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  padding: 0 5px;
 }

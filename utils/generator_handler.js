@@ -9,6 +9,7 @@ export const generateMaze = (ctx) => {
 
   $("#quick-gen").click( () => {
     grid.resetGrid();
+    grid.resetCells();
     grid.fillGrid(ctx);
     grid.draw(ctx);
     dfs.quickMaze();
@@ -16,6 +17,7 @@ export const generateMaze = (ctx) => {
 
   $("#dfs-gen").click( () => {
     grid.resetGrid();
+    grid.resetCells();
     grid.fillGrid(ctx);
     grid.draw(ctx);
     $("button").prop("disabled", true);
@@ -24,6 +26,7 @@ export const generateMaze = (ctx) => {
 
   $("#bfs-gen").click( () => {
     grid.resetGrid();
+    grid.resetCells();
     grid.fillGrid(ctx);
     grid.draw(ctx);
     $("button").prop("disabled", true);

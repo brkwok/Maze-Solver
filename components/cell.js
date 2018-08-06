@@ -87,6 +87,7 @@ class Cell {
     this.state.stack = false;
     this.state.checking = false;
     this.state.endingCell = false;
+    this.state.visited = false;
   }
 
   makeToPath() {
@@ -262,6 +263,8 @@ class Cell {
       ctx.fillStyle = "#ffc9ff";
     } else if (this.state.stack) {
       ctx.fillStyle = "#e6e600";
+    } else if (this.state.visited) {
+      ctx.fillStyle = "#990000";
     } else if (this.state.type === "w") {
       ctx.fillStyle = "#f5f5dc";
     } else if (this.state.type === "p") {
