@@ -3,16 +3,15 @@ import * as GenUtil from '../utils/gen_util';
 class BFSGenerator {
   constructor(grid) {
     this.grid = grid;
-    this.stack = [];
+    this.queue = [];
   }
 
   mazeAnimation(int) {
     this.startGeneration();
     let mazeId = setInterval( () => {
-      if (this.stack.length > 0) {
+      if (this.queue.length > 0) {
         let stackCell = this.getNextCell();
         this.exploreStack(stackCell);
-        stackCell.state.checking = true;
       } else {
         this.getEndCell();
         clearInterval(mazeId);
@@ -37,7 +36,7 @@ class BFSGenerator {
 
 
     const shuffled = GenUtil.shuffle(nextMoves);
-    this.stack = this.stack.concat(shuffled);
+    this.queue = this.queue.concat(shuffled);
   }
 
   exploreStack(stackCell) {
@@ -51,32 +50,32 @@ class BFSGenerator {
 
     //get next valid moves for cell to move
     let nextMoves = stackCell.getValidMoves();
-    //add the valid move cells to the stack;
+    //add the valid move cells to the queue;
     if (nextMoves) {
       nextMoves.forEach( (move) => {
         let cell = this.grid.getCell(move[0], move[1]);
-        cell.state.stack = true;
+        cell.state.queue = true;
         cell.draw(this.grid.ctx);
       });
 
       const shuffled = GenUtil.shuffle(nextMoves);
-      this.stack = this.stack.concat(shuffled);
+      this.queue = this.queue.concat(shuffled);
     }
   }
 
   getNextCell() {
-    if (this.stack.length === 0) {
+    if (this.queue.length === 0) {
       return null;
     }
 
-    let stackSize = this.stack.length;
+    let stackSize = this.queue.length;
     let randNum = Math.floor(Math.random() * stackSize);
-    let randMovePos = this.stack[randNum];
-    // let pos = this.stack.shift();
+    let randMovePos = this.queue[randNum];
+    // let pos = this.queue.shift();
     let currCell = this.grid.getCell(randMovePos[0], randMovePos[1]);
     // let currCell = this.grid.getCell(pos[0], pos[1]);
-    this.stack.splice(randNum, 1);
-    currCell.state.stack = false;
+    this.queue.splice(randNum, 1);
+    currCell.state.queue = false;
     currCell.draw(this.grid.ctx);
 
     return currCell;

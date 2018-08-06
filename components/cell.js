@@ -38,7 +38,7 @@ class Cell {
       checked: false,
       stack: false,
       visited: false,
-      checking: false,
+      solution: false,
       neighbor: false
     };
     this.vectorDir = {
@@ -85,7 +85,7 @@ class Cell {
     this.state.parentNode = null;
     this.state.type = 'w';
     this.state.stack = false;
-    this.state.checking = false;
+    this.state.solution = false;
     this.state.endingCell = false;
     this.state.visited = false;
   }
@@ -259,10 +259,12 @@ class Cell {
       ctx.fillStyle = "#0000ff";
     } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
-    } else if (this.state.checking) {
+    } else if (this.state.solution) {
       ctx.fillStyle = "#ffc9ff";
-    } else if (this.state.stack) {
+    } else if (this.state.stack || this.state.queue) {
       ctx.fillStyle = "#e6e600";
+    } else if (this.state.solution) {
+      ctx.fillStyle = "#ffff00";
     } else if (this.state.visited) {
       ctx.fillStyle = "#990000";
     } else if (this.state.type === "w") {
