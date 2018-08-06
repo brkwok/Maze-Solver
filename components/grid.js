@@ -65,11 +65,8 @@ class Grid {
   validPath(cell) {
     let validNeighbors = cell.validNeighbors();
 
-    let parent = cell.getParentNode();
-    let grandParent = parent.getParentNode();
-
     validNeighbors.forEach( (cell) => {
-      if (!(parent.isMatch(cell) || grandParent.isMatch(cell) || parent.isChild(cell)) && cell.state.type === "p") {
+      if (cell.state.type === "p") {
         return false;
       }
     });
@@ -82,6 +79,7 @@ class Grid {
       row.forEach( (cell) => {
         cell.childNodes = [];
         cell.parentNode = null;
+        cell.clearSolution();
       });
     });
   }

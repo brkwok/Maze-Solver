@@ -92,6 +92,7 @@ class Cell {
   clearSolution() {
     this.state.visited = false;
     this.state.solution = false;
+    this.state.checked = false;
   }
 
   makeToPath() {
@@ -264,19 +265,15 @@ class Cell {
     } else if (this.state.endingCell) {
       ctx.fillStyle = "#ff0000";
     } else if (this.state.solution) {
-      ctx.fillStyle = "#ffc9ff";
+      ctx.fillStyle = "#6699ff";
     } else if (this.state.stack || this.state.queue) {
       ctx.fillStyle = "#e6e600";
-    } else if (this.state.solution) {
-      ctx.fillStyle = "#ffff00";
     } else if (this.state.visited) {
-      ctx.fillStyle = "#990000";
+      ctx.fillStyle = "#152951";
     } else if (this.state.type === "w") {
       ctx.fillStyle = "#f5f5dc";
     } else if (this.state.type === "p") {
       ctx.fillStyle = "#86b300";
-    } else {
-      ctx.fillStyle = "#000000";
     }
     ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
   }

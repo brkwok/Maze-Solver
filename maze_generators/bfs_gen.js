@@ -16,6 +16,8 @@ class BFSGenerator {
         this.getEndCell();
         clearInterval(mazeId);
         $("button").prop("disabled", false);
+        $("p").toggle(true);
+        $("button").toggle(true);
       }
     }, int);
 

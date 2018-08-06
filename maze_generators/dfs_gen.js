@@ -17,6 +17,8 @@ class DFSGenerator {
         this.getEndCell();
         clearInterval(mazeId);
         $("button").prop("disabled", false);
+        $("p").toggle(true);
+        $("button").toggle(true);
       }
     }, int);
     return mazeId;
@@ -87,6 +89,8 @@ class DFSGenerator {
     }
 
     this.getEndCell();
+    $("p").toggle(true);
+    $("button").toggle(true);
   }
 
   getEndCell() {

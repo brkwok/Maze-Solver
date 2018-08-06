@@ -20,7 +20,7 @@ class BFSSolver {
       } else {
         let parentCell = cell.parentNode;
         parentCell.state.solution = true;
-        parentCell.draw(cell.ctx);
+        parentCell.draw(this.ctx);
         this.traceBack(parentCell);
       }
     }, 0);
@@ -56,10 +56,6 @@ class BFSSolver {
   makeMove() {
     let cell = this.queue[0];
 
-    if (typeof cell === "undefined") {
-      this.queue.shift();
-    }
-
     while (cell.state.visited) {
       cell = this.queue.shift();
     }
@@ -75,6 +71,8 @@ class BFSSolver {
   }
 
   solve() {
+    this.end = false;
+    this.queue = [];
     let start = this.grid.startCell;
     this.getPaths(start);
 
