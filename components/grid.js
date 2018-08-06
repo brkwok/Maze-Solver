@@ -53,6 +53,15 @@ class Grid {
     });
   }
 
+  resetSolution() {
+    this.cells.forEach( (row) => {
+      row.forEach( (cell) => {
+        cell.clearSolution();
+        cell.draw(this.ctx);
+      });
+    });
+  }
+
   validPath(cell) {
     let validNeighbors = cell.validNeighbors();
 

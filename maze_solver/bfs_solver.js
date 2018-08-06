@@ -7,6 +7,9 @@ class BFSSolver {
     this.end = false;
     this.queue = [];
     this.time = 0;
+
+    this.getPaths = this.getPaths.bind(this);
+    this.solve = this.solve.bind(this);
   }
 
   traceBack(cell) {
@@ -18,36 +21,47 @@ class BFSSolver {
         let parentCell = cell.parentNode;
         parentCell.state.solution = true;
         parentCell.draw(cell.ctx);
-        this.traceBack(parent);
+        this.traceBack(parentCell);
       }
     }, 0);
   }
 
   getPaths(cell) {
     let moves = cell.getAllMoves();
-
     let validPaths = [];
-
-    moves.forEach((path) => {
-      if (this.grid.inGrid(path[0], path[1])) {
-        let nextCell = this.grid.getCell(path[0], path[1]);
+    // moves.forEach((path) => {
+    //   if (this.grid.inGrid(path[0], path[1])) {
+    //     let nextCell = this.grid.getCell(path[0], path[1]);
+    //     if (nextCell.state.type === "p" && nextCell.state.visited === false && typeof nextCell !== "undefined") {
+    //       nextCell.parent = cell;
+    //       validPaths.push(nextCell);
+    //     }
+    //   }
+    // });
+    for (let i = 0; i < moves.length; i++) {
+      let move = moves[i];
+      if (this.grid.inGrid(move[0], move[1])) {
+        let nextCell = this.grid.getCell(move[0], move[1]);
         if (nextCell.state.type === "p" && nextCell.state.visited === false) {
           nextCell.parent = cell;
           validPaths.push(nextCell);
         }
       }
-    });
+    }
 
     this.queue = this.queue.concat(validPaths);
+    return validPaths;
   }
 
   makeMove() {
     let cell = this.queue[0];
-    let i = 0;
+
+    if (typeof cell === "undefined") {
+      this.queue.shift();
+    }
 
     while (cell.state.visited) {
-      cell = this.queue[i];
-      i++;
+      cell = this.queue.shift();
     }
     SolverUtil.travel(cell);
 
@@ -71,7 +85,7 @@ class BFSSolver {
       } else {
         clearInterval(solver);
       }
-    }, 1);
+    }, 0);
   }
 }
 

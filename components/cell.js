@@ -80,7 +80,6 @@ class Cell {
 
   clear() {
     //wipes off the cell clean
-    this.state.checked =  false;
     this.state.childNodes = [];
     this.state.parentNode = null;
     this.state.type = 'w';
@@ -88,6 +87,11 @@ class Cell {
     this.state.solution = false;
     this.state.endingCell = false;
     this.state.visited = false;
+  }
+
+  clearSolution() {
+    this.state.visited = false;
+    this.state.solution = false;
   }
 
   makeToPath() {
