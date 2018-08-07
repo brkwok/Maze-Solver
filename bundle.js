@@ -178,7 +178,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/grid */ \"./components/grid.js\");\n/* harmony import */ var _utils_generator_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/generator_handler */ \"./utils/generator_handler.js\");\n\n\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  const canvasEl = document.getElementById(\"canvasEl\");\n  canvasEl.width = 620;\n  canvasEl.height = 420;\n  const ctx = canvasEl.getContext(\"2d\");\n  ctx.lineWidth = 10;\n  ctx.strokeRect(5, 5, 610, 410);\n\n  let maze = new _components_grid__WEBPACK_IMPORTED_MODULE_0__[\"default\"](ctx);\n  maze.fillGrid(ctx);\n  maze.draw(ctx);\n\n  _utils_generator_handler__WEBPACK_IMPORTED_MODULE_1__[\"generateMaze\"](ctx);\n});\n\n\n//# sourceURL=webpack:///./src/maze.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_generator_handler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/generator_handler */ \"./utils/generator_handler.js\");\n\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  const canvasEl = document.getElementById(\"canvasEl\");\n  canvasEl.width = 620;\n  canvasEl.height = 420;\n  const ctx = canvasEl.getContext(\"2d\");\n  ctx.lineWidth = 10;\n  ctx.strokeRect(5, 5, 610, 410);\n\n  _utils_generator_handler__WEBPACK_IMPORTED_MODULE_0__[\"generateMaze\"](ctx);\n});\n\n\n//# sourceURL=webpack:///./src/maze.js?");
 
 /***/ }),
 
