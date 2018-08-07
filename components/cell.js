@@ -9,6 +9,8 @@ class Cell {
     this.childNodes = [];
     this.parentNode = null;
     this.distance = null;
+    this.gCost = null;
+    this.hCost = null;
     this.neighborCoords = {
       up: [-1, 0],
       rightUp: [-1, 1],
@@ -39,7 +41,7 @@ class Cell {
       stack: false,
       visited: false,
       solution: false,
-      neighbor: false
+      neighbor: false,
     };
     this.vectorDir = {
       right : ["up", "rightUp", "right", "rightDown", "down"],
@@ -223,7 +225,6 @@ class Cell {
     } else {
       vector = "up";
     }
-
     return vector;
   }
 

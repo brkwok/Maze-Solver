@@ -5,11 +5,12 @@ class AStarSolver {
     this.end = false;
     this.queue = [];
     this.time = 0;
-
-    this.getPaths = this.getPaths.bind(this);
-    this.solve = this.solve.bind(this);
+    this.cost = {};
   }
 
+  getNeighbor() {
+
+  }
 }
 
 export default AStarSolver;
