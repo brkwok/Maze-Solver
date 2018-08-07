@@ -29,15 +29,7 @@ class BFSSolver {
   getPaths(cell) {
     let moves = cell.getAllMoves();
     let validPaths = [];
-    // moves.forEach((path) => {
-    //   if (this.grid.inGrid(path[0], path[1])) {
-    //     let nextCell = this.grid.getCell(path[0], path[1]);
-    //     if (nextCell.state.type === "p" && nextCell.state.visited === false && typeof nextCell !== "undefined") {
-    //       nextCell.parent = cell;
-    //       validPaths.push(nextCell);
-    //     }
-    //   }
-    // });
+
     for (let i = 0; i < moves.length; i++) {
       let move = moves[i];
       if (this.grid.inGrid(move[0], move[1])) {

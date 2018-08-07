@@ -3,6 +3,7 @@ import DFSGenerator from '../maze_generators/dfs_gen';
 import BFSGenerator from '../maze_generators/bfs_gen';
 import BFSSolver from '../maze_solver/bfs_solver';
 import DFSSolver from '../maze_solver/dfs_solver';
+import AStarSolver from '../maze_solver/a_star_solver';
 
 export const generateMaze = (ctx) => {
   let grid = new Grid(ctx);
@@ -10,6 +11,7 @@ export const generateMaze = (ctx) => {
   let bfs = new BFSGenerator(grid);
   let bfsSolver = new BFSSolver(grid);
   let dfsSolver = new DFSSolver(grid);
+  let aStarSolver = new AStarSolver(grid);
 
   $("#quick-gen").click( () => {
     grid.resetGrid();
@@ -48,5 +50,12 @@ export const generateMaze = (ctx) => {
     grid.draw(ctx);
     $("button").prop("disabled", true);
     dfsSolver.solve();
+  });
+
+  $("#astar-solv").click( () => {
+    grid.resetSolution();
+    grid.draw(ctx);
+    $("button").prop("disabled", true);
+    aStarSolver.solve();
   });
 };

@@ -267,10 +267,10 @@ class Cell {
       ctx.fillStyle = "#ff0000";
     } else if (this.state.solution) {
       ctx.fillStyle = "#152951";
-    } else if (this.state.stack || this.state.queue) {
-      ctx.fillStyle = "#e6e600";
     } else if (this.state.visited) {
       ctx.fillStyle = "#6699ff";
+    } else if (this.state.stack || this.state.queue) {
+      ctx.fillStyle = "#e6e600";
     } else if (this.state.type === "w") {
       ctx.fillStyle = "#f5f5dc";
     } else if (this.state.type === "p") {
