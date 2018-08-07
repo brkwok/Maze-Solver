@@ -59,10 +59,6 @@ body {
   background: lightgrey;
 }
 
-.links-wrapper {
-  margin-top: 25px;
-}
-
 .fab {
   font-size: 30px;
 }
@@ -75,11 +71,23 @@ body {
   color: black;
 }
 
+.links-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .logo-wrap {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding-bottom: 15px;
+}
+
+.name {
+  margin-bottom: 50px;
 }
 
 .logo {
