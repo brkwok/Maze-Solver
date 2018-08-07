@@ -42,6 +42,7 @@ class Cell {
       visited: false,
       solution: false,
       neighbor: false,
+      probe: false
     };
     this.vectorDir = {
       right : ["up", "rightUp", "right", "rightDown", "down"],
@@ -92,6 +93,7 @@ class Cell {
   }
 
   clearSolution() {
+    this.state.probe = false;
     this.state.visited = false;
     this.state.solution = false;
     this.state.checked = false;
@@ -269,6 +271,8 @@ class Cell {
       ctx.fillStyle = "#152951";
     } else if (this.state.visited) {
       ctx.fillStyle = "#6699ff";
+    } else if (this.state.probe) {
+      ctx.fillStyle = "#f44242";
     } else if (this.state.stack || this.state.queue) {
       ctx.fillStyle = "#e6e600";
     } else if (this.state.type === "w") {

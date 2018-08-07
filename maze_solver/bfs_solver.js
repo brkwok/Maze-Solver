@@ -36,7 +36,9 @@ class BFSSolver {
         let nextCell = this.grid.getCell(move[0], move[1]);
         if (nextCell.state.type === "p" && nextCell.state.visited === false) {
           nextCell.parent = cell;
+          nextCell.state.probe = true;
           validPaths.push(nextCell);
+          nextCell.draw(this.ctx);
         }
       }
     }

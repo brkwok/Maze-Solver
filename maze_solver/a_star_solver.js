@@ -33,6 +33,8 @@ class AStarSolver {
         if (nextCell.state.type === "p" && nextCell.state.visited === false) {
           this.calcCost(nextCell);
           nextCell.parent = cell;
+          nextCell.state.probe = true;
+          nextCell.draw(this.ctx);
         }
       }
     }
