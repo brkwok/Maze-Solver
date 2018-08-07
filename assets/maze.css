@@ -56,6 +56,10 @@ body {
 }
 
 .gen-buttons:disabled {
+  cursor: not-allowed;
+}
+
+.gen-buttons:disabled {
   background: lightgrey;
 }
 
