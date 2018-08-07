@@ -78,7 +78,9 @@ class AStarSolver {
     let startCell = this.grid.startCell;
     let endCell = this.grid.endCell;
 
+    //calculate the gCost from current cell to starting cell
     cell.gCost = Math.floor(Math.sqrt(Math.pow((Math.abs(startCell.x - cell.x) * 10), 2) + Math.pow((Math.abs(startCell.y - cell.y) * 10), 2)));
+    //calculate the hCost from current cell to starting cell
     cell.hCost =  Math.floor(Math.sqrt(Math.pow((Math.abs(endCell.x - cell.x) * 10), 2) + Math.pow((Math.abs(endCell.y - cell.y) * 10), 2)));
     let fCostKey = cell.gCost + cell.hCost;
 
