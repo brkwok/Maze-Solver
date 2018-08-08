@@ -157,7 +157,7 @@ class Cell {
   }
 
   getAllMoves() {
-    let dir = ["up", "down", "left", "right"];
+    let dir = ["down", "right", "up", "left"];
     let moves = [];
     dir.forEach( (d) => {
       // let move = this.getMove(d);
