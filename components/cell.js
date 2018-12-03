@@ -276,9 +276,9 @@ class Cell {
     } else if (this.state.stack || this.state.queue) {
       ctx.fillStyle = "#e6e600";
     } else if (this.state.type === "w") {
-      ctx.fillStyle = "#f5f5dc";
-    } else if (this.state.type === "p") {
       ctx.fillStyle = "#86b300";
+    } else if (this.state.type === "p") {
+      ctx.fillStyle = "#f5f5dc";
     }
     ctx.fillRect(this.renderX, this.renderY, this.width, this.width);
   }

@@ -1,7 +1,17 @@
 body {
   margin: 0 auto;
   width: 100%;
+  min-width: 1000px;
   font-family: 'Raleway', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.maze-container {
+  width: 70%;
+  min-width: 55%;
+  display: flex;
+  flex-direction: column;
 }
 
 .maze-wrapper {

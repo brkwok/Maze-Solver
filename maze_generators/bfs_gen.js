@@ -11,7 +11,7 @@ class BFSGenerator {
     let mazeId = setInterval( () => {
       if (this.queue.length > 0) {
         let stackCell = this.getNextCell();
-        this.exploreStack(stackCell);
+        this.exploreQueue(stackCell);
       } else {
         this.getEndCell();
         clearInterval(mazeId);
@@ -41,7 +41,7 @@ class BFSGenerator {
     this.queue = this.queue.concat(shuffled);
   }
 
-  exploreStack(stackCell) {
+  exploreQueue(stackCell) {
     const parent = stackCell.getParentNode();
     if (parent.checkMoveValidity(stackCell)) {
       stackCell.makeToPath();

@@ -1,0 +1,50 @@
+.legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  min-width: 15%;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.legend-box {
+  width: 10px;
+  height: 10px;
+}
+
+.start {
+  background: #0000ff;
+}
+
+.end {
+  background: #ff0000;
+}
+
+.path {
+  background: #f5f5dc;
+}
+
+.wall {
+  background: #86b300;
+}
+
+.visited {
+  background: #6699ff;
+}
+
+.in-stack {
+  background: #e6e600;
+}
+
+.probes {
+  background: #f44242;
+}
+
+.solution {
+  background: #152951;
+}

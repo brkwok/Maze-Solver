@@ -8,37 +8,93 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/css_reset.css">
     <link rel="stylesheet" href="./assets/css/maze.css">
+    <link rel="stylesheet" href="./assets/css/legend.css">
     <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon" />
     <script src="bundle.js"></script>
   </head>
   <body>
-    <section class="maze-wrapper">
-      <div class="title">Maze Solver</div>
-      <p>Click on buttons below to randomly generate a maze</p>
-      <section class="maze-canvas">
-        <div class="generators">
-          <button class="gen-buttons" id="dfs-gen">Depth First</button>
-          <button class="gen-buttons" id="bfs-gen">Breadth First</button>
-          <button class="gen-buttons" id="quick-gen">Quick Maze</button>
+    <section class="maze-container">
+      <section class="maze-wrapper">
+        <div class="title">Maze Solver</div>
+        <p>Click on buttons below to randomly generate a maze</p>
+        <section class="maze-canvas">
+          <div class="generators">
+            <button class="gen-buttons" id="dfs-gen">Depth First</button>
+            <button class="gen-buttons" id="bfs-gen">Breadth First</button>
+            <button class="gen-buttons" id="quick-gen">Quick Maze</button>
+          </div>
+          <canvas id="canvasEl"></canvas>
+        </section>
+      </section>
+      <section class="maze-solvers">
+        <p hidden>Click on buttons below to start solving the maze</p>
+        <div class="solv-buttons">
+          <button hidden class="gen-buttons" id="bfs-solv" type="button" name="button">Breadth First</button>
+          <button hidden class="gen-buttons" id="dfs-solv" type="button" name="button">Depth First</button>
+          <button hidden class="gen-buttons" id="astar-solv" type="button" name="button">A*</button>
         </div>
-        <canvas id="canvasEl"></canvas>
+      </section>
+      <section class="links-wrapper">
+        <div class="logo-wrap">
+          <a class="logo" href="https://github.com/brkwok" target="_blank"><i class="fab fa-github"></i></a>
+          <a class="logo" href="https://www.linkedin.com/in/br-kwok/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a class="logo" target="_blank" href="https://brkwok.github.io/personal/"><img src="./assets/css/images/BK.jpg"></a>
+        </div>
+        <div class="name">
+          Brian Kwok
+        </div>
       </section>
     </section>
-    <section class="maze-solvers">
-      <p hidden>Click on buttons below to start solving the maze</p>
-      <div class="solv-buttons">
-        <button hidden class="gen-buttons" id="bfs-solv" type="button" name="button">Breadth First</button>
-        <button hidden class="gen-buttons" id="dfs-solv" type="button" name="button">Depth First</button>
-        <button hidden class="gen-buttons" id="astar-solv" type="button" name="button">A*</button>
-      </div>
-    </section>
-    <section class="links-wrapper">
-      <div class="logo-wrap">
-        <a class="logo" href="https://github.com/brkwok" target="_blank"><i class="fab fa-github"></i></a>
-        <a class="logo" href="https://www.linkedin.com/in/br-kwok/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      </div>
-      <div class="name">
-        Brian Kwok
+    <section class="legend">
+      <div class="legend-items-container">
+        <div class="wrapper">
+          <div class="legend-box wall"></div>
+          <div class="">
+            : Wall
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="legend-box in-stack"></div>
+          <div class="">
+            : Stack
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="legend-box path"></div>
+          <div class="">
+            : Paths
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="legend-box start"></div>
+          <div class="">
+            : Start Cell
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="legend-box end"></div>
+          <div class="">
+            : Maze Exit
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="legend-box probes"></div>
+          <div class="">
+            : Probes
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="legend-box visited"></div>
+          <div class="">
+            : Visited Cell
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="legend-box solution"></div>
+          <div class="">
+            : Solution
+          </div>
+        </div>
       </div>
     </section>
   </body>

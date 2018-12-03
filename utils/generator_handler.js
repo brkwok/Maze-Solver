@@ -30,6 +30,10 @@ export const generateMaze = (ctx) => {
     dfs.mazeAnimation(0);
   });
 
+  // $("#dfs-gen").hover( () => {
+  //
+  // })
+
   $("#bfs-gen").click( () => {
     grid.resetGrid();
     grid.resetCells();
