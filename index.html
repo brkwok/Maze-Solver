@@ -19,9 +19,36 @@
         <p>Click on buttons below to randomly generate a maze</p>
         <section class="maze-canvas">
           <div class="generators">
-            <button class="gen-buttons" id="dfs-gen">Depth First</button>
-            <button class="gen-buttons" id="bfs-gen">Breadth First</button>
-            <button class="gen-buttons" id="quick-gen">Quick Maze</button>
+            <div class="buttons-container">
+              <button class="gen-buttons" id="dfs-gen">Depth First</button>
+              <div class="information">
+                <div class="outer">
+                  <div class="inner">
+                    <span class="info">i</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="buttons-container">
+              <button class="gen-buttons" id="bfs-gen">Breadth First</button>
+              <div class="information">
+                <div class="outer">
+                  <div class="inner">
+                    <span class="info">i</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="buttons-container">
+              <button class="gen-buttons" id="quick-gen">Quick Maze</button>
+              <div class="information">
+                <div class="outer">
+                  <div class="inner">
+                    <span class="info">i</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <canvas id="canvasEl"></canvas>
         </section>

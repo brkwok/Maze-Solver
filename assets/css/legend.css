@@ -48,3 +48,30 @@
 .solution {
   background: #152951;
 }
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.outer {
+  border: 1px solid lightgrey;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.inner {
+  color: darkgrey;
+  font-weight: bold;
+}
+
+.info {
+  cursor: pointer;
+}

@@ -57,6 +57,7 @@ body {
   padding: 10px 5px;
   border-radius: 5px;
   margin: 20px 15px;
+  margin-bottom: 5px;
   transition: 0.5s;
 }
 
@@ -112,4 +113,8 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 3px;
+}
+
+.generators {
+  display: flex;
 }
