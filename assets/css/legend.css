@@ -54,9 +54,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 110px;
+  width: 130px;
 }
 
-.outer {
+[class*=outer] {
   border: 1px solid lightgrey;
   width: 25px;
   height: 25px;
@@ -65,6 +67,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .inner {
@@ -74,4 +77,13 @@
 
 .info {
   cursor: pointer;
+}
+
+[class*=exp] {
+  position: absolute;
+  background: white;
+  border: 0.5px solid lightgrey;
+  width: 400px;
+  padding: 20px;
+  top: 41%;
 }

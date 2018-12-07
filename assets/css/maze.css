@@ -57,7 +57,7 @@ body {
   padding: 10px 5px;
   border-radius: 5px;
   margin: 20px 15px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   transition: 0.5s;
 }
 
@@ -117,4 +117,13 @@ body {
 
 .generators {
   display: flex;
+}
+
+.def {
+  color: black;
+}
+
+.bold {
+  font-weight: bold;
+  color: red;
 }

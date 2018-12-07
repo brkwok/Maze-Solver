@@ -30,10 +30,6 @@ export const generateMaze = (ctx) => {
     dfs.mazeAnimation(0);
   });
 
-  // $("#dfs-gen").hover( () => {
-  //
-  // })
-
   $("#bfs-gen").click( () => {
     grid.resetGrid();
     grid.resetCells();
@@ -62,4 +58,31 @@ export const generateMaze = (ctx) => {
     $("button").prop("disabled", true);
     aStarSolver.solve();
   });
+
+  $(".outer-dfs").hover(
+    () => {
+      $("#exp-dfs").show( "easing" );
+    },
+    () => {
+      $("#exp-dfs").hide( "easing" );
+    }
+  );
+
+  $(".outer-bfs").hover(
+    () => {
+      $("#exp-bfs").show( "easing" );
+    },
+    () => {
+      $("#exp-bfs").hide( "easing" );
+    }
+  );
+
+  $(".outer-qm").hover(
+    () => {
+      $("#exp-qm").show( "easing" );
+    },
+    () => {
+      $("#exp-qm").hide( "easing" );
+    }
+  );
 };

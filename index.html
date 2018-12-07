@@ -15,6 +15,21 @@
   <body>
     <section class="maze-container">
       <section class="maze-wrapper">
+        <div hidden class="exp" id="exp-dfs">
+          <div>
+            <p class="def"><span class="bold">Depth-first search(DFS)</span> is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking.</p>
+          </div>
+        </div>
+        <div hidden class="exp" id="exp-bfs">
+          <div>
+            <p class="def"><span class="bold">Breadth-first search (BFS)</span> is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph, sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.</p>
+          </div>
+        </div>
+        <div  hidden class="exp" id="exp-qm">
+          <div>
+            <p class="def"><span class="bold">Quick Maze</span> implements Depth-first search algorithm to generate a random maze without visualization.</p>
+          </div>
+        </div>
         <div class="title">Maze Solver</div>
         <p>Click on buttons below to randomly generate a maze</p>
         <section class="maze-canvas">
@@ -22,7 +37,7 @@
             <div class="buttons-container">
               <button class="gen-buttons" id="dfs-gen">Depth First</button>
               <div class="information">
-                <div class="outer">
+                <div class="outer-dfs">
                   <div class="inner">
                     <span class="info">i</span>
                   </div>
@@ -32,7 +47,7 @@
             <div class="buttons-container">
               <button class="gen-buttons" id="bfs-gen">Breadth First</button>
               <div class="information">
-                <div class="outer">
+                <div class="outer-bfs">
                   <div class="inner">
                     <span class="info">i</span>
                   </div>
@@ -42,7 +57,7 @@
             <div class="buttons-container">
               <button class="gen-buttons" id="quick-gen">Quick Maze</button>
               <div class="information">
-                <div class="outer">
+                <div class="outer-qm">
                   <div class="inner">
                     <span class="info">i</span>
                   </div>

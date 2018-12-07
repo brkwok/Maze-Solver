@@ -1,4 +1,4 @@
-import * as GeneratorHandler from '../utils/generator_handler';
+import * as GeneratorHandler from '../utils/generator_handler.jsx';
 
 document.addEventListener("DOMContentLoaded", () => {
   const canvasEl = document.getElementById("canvasEl");
