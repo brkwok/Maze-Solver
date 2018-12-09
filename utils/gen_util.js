@@ -13,8 +13,10 @@ export const endCell = (endCell) => {
 };
 
 export const randomPos = () => {
-  let x = Math.floor((Math.random() * 3) + 56);
-  let y = Math.floor((Math.random() * 3) + 36);
+  const coords = [[59, 39], [58, 39], [57, 39], [59, 38], [59, 37]];
+  // let x = Math.floor((Math.random() * 4) + 56);
+  // let y = Math.floor((Math.random() * 4) + 36);
+  let random = Math.floor((Math.random() * 4));
 
-  return [x, y];
+  return coords[random];
 };
