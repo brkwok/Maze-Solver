@@ -68,7 +68,13 @@ class DFSSolver {
 
 
     let solver = setInterval( () => {
+      let timer = document.getElementById("solv-dfs");
+      let time = timer.innerText;
+      let timeToInt = parseFloat(time);
+
       if (this.end === false) {
+        let newTime = timeToInt + 0.01;
+        timer.innerText = newTime.toFixed(2);
         this.makeMove();
       } else {
         clearInterval(solver);

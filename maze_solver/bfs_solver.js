@@ -71,12 +71,18 @@ class BFSSolver {
     this.getPaths(start);
 
     let solver = setInterval( () => {
+      let timer = document.getElementById("solv-bfs");
+      let time = timer.innerText;
+      let timeToInt = parseFloat(time);
+
       if (this.end === false) {
+        let newTime = timeToInt + 0.01;
+        timer.innerText = newTime.toFixed(2);
         this.makeMove();
       } else {
         clearInterval(solver);
       }
-    }, 0);
+    }, 10);
   }
 }
 

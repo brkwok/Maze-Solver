@@ -129,6 +129,7 @@ body {
 }
 
 .solv-time {
+  margin-top: 8px;
   display: flex;
   justify-content: space-around;
   align-items: center;
