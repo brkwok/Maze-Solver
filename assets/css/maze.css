@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  margin-bottom: 15px;
 }
 
 .solv-buttons {
@@ -126,4 +126,20 @@ body {
 .bold {
   font-weight: bold;
   color: red;
+}
+
+.solv-time {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 0;
+  height: 25px;
+  font-size: 20px;
+}
+
+[class*=solv-time-] {
+  text-align: center;
+  width: 88px;
+  padding: 0 21px;
+  margin: 15px 0;
 }

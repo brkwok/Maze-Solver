@@ -70,7 +70,6 @@ class BFSSolver {
     let start = this.grid.startCell;
     this.getPaths(start);
 
-
     let solver = setInterval( () => {
       if (this.end === false) {
         this.makeMove();
