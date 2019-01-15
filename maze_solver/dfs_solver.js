@@ -79,7 +79,7 @@ class DFSSolver {
       } else {
         clearInterval(solver);
       }
-    }, 0);
+    }, 10);
   }
 }
 

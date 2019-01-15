@@ -119,7 +119,7 @@ class AStarSolver {
       } else {
         clearInterval(solver);
       }
-    }, 0);
+    }, 10);
   }
 }
 

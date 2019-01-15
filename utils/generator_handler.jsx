@@ -12,8 +12,15 @@ export const generateMaze = (ctx) => {
   let bfsSolver = new BFSSolver(grid);
   let dfsSolver = new DFSSolver(grid);
   let aStarSolver = new AStarSolver(grid);
+  let dfsTime = document.getElementById("solv-dfs");
+  let bfsTime = document.getElementById("solv-bfs");
+  let astarTime = document.getElementById("solv-astar");
+
 
   $("#quick-gen").click( () => {
+    bfsTime.innerText = "0.0";
+    dfsTime.innerText = "0.0";
+    astarTime.innerText = "0.0";
     grid.resetGrid();
     grid.resetCells();
     grid.fillGrid(ctx);
@@ -22,6 +29,9 @@ export const generateMaze = (ctx) => {
   });
 
   $("#dfs-gen").click( () => {
+    bfsTime.innerText = "0.0";
+    dfsTime.innerText = "0.0";
+    astarTime.innerText = "0.0";
     grid.resetGrid();
     grid.resetCells();
     grid.fillGrid(ctx);
@@ -31,6 +41,9 @@ export const generateMaze = (ctx) => {
   });
 
   $("#bfs-gen").click( () => {
+    bfsTime.innerText = "0.0";
+    dfsTime.innerText = "0.0";
+    astarTime.innerText = "0.0";
     grid.resetGrid();
     grid.resetCells();
     grid.fillGrid(ctx);
@@ -40,12 +53,14 @@ export const generateMaze = (ctx) => {
   });
 
   $("#bfs-solv").click( () => {
+    bfsTime.innerText = "0.0";
     grid.resetSolution();
     $("button").prop("disabled", true);
     bfsSolver.solve();
   });
 
   $("#dfs-solv").click( () => {
+    dfsTime.innerText = "0.0";
     grid.resetSolution();
     grid.draw(ctx);
     $("button").prop("disabled", true);
@@ -53,6 +68,7 @@ export const generateMaze = (ctx) => {
   });
 
   $("#astar-solv").click( () => {
+    astarTime.innerText = "0.0";
     grid.resetSolution();
     grid.draw(ctx);
     $("button").prop("disabled", true);
