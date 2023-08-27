@@ -23,7 +23,7 @@ The very basic foundation of Maze-Solver is a canvas element that reflects a Jav
 ### Constraints
 
 
-```
+```javascript
   vector(moveCell) {
     this.makeChild(moveCell);
     let parent = moveCell.getParentNode();
@@ -78,7 +78,7 @@ The animation of each of the algorithms were accomplished through setting each g
 
 A* is a pathfinding algorithm that keeps track of the total cost from the start node and the end node. In general, in A* algorithm, each cells keep track of G-cost(distance from the start node to the current node), H-cost(distance from end node), and F-cost(sum of both F and G costs). Unlike other algorithms that searchs for random paths until it reaches the end node, A* algorithm favors exploring cells with the lowest cost the travel to.
 
-```
+```javascript
   calcCost(cell) {
     let startCell = this.grid.startCell;
     let endCell = this.grid.endCell;
@@ -140,7 +140,7 @@ A* is a pathfinding algorithm that keeps track of the total cost from the start 
   ```
   The moves are stored in objects as F-costs as the keys pointing to another object that has H-costs directing to array of cells with corresponding H-costs
   
-  ```
+  ```javascript
   this.fCost = {
     fCost: {
       hCost: [Cell1, Cell2]
@@ -151,7 +151,7 @@ A* is a pathfinding algorithm that keeps track of the total cost from the start 
   
   ### Depth-first searching
   
-  ```
+  ```javascript
     constructor(grid) {
     this.grid = grid;
     this.ctx = this.grid.ctx;
@@ -200,7 +200,7 @@ A* is a pathfinding algorithm that keeps track of the total cost from the start 
   
   ### Breadth-first searching
   
-  ```
+  ```javascript
     makeMove() {
     let cell = this.queue[0];
 
